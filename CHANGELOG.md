@@ -7,6 +7,8 @@ The kit is dogfooded on a live project ("Good Money Dashboard") — most improve
 ## 2026-06-12
 
 ### Added
+- **project-init:** the final brain-check gate — last step before build reviews the shipped AI's system prompt/CLAUDE.md for completeness, consistency, and loose ends. *Born from a real oversight: the advisor identity was nearly designed into conversation history (where it decays) instead of the system prompt (where it's re-sent every turn).*
+- **project-init:** changelog discipline — when the kit edits its own skills, every change ships a CHANGELOG entry in the same commit, with the real bug/session that prompted it.
 - **project-init:** Phase 0 — gauge the user's technical level FIRST, then tailor all language to it (non-coders get plain words + a setup sentence on every jargon term). Reworked the delivery-substrate question into easiest→hardest options with pros/cons.
 - **project-init:** Phase 1.5 — MVP scope-lock drill (identify Tier 1 fast, tier everything else, hold the line against mid-project scope creep).
 - **project-init:** Phase 3 — closes by educating the user on what was built, explaining each companion skill + when to use it, and pushing toward the named next action.
