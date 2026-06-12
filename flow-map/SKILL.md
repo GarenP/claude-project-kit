@@ -51,9 +51,13 @@ Status states: `.（default）` = locked/specced (solid cream, orange spine) · 
 - **Category panels are explainable too:** every group panel gets its own ⓘ dot, hover tip, and click-drawer ("SYSTEM LAYER" pill · what this layer does · why it matters · what's next when pending) — the reader can learn the system top-down (layers first) or bottom-up (nodes first).
 - Wires drawn into one absolutely-positioned `<svg>` from DOM offsets (`offsetLeft/Top` walk) after layout; redraw on resize.
 
-## Reference implementation
+## Start from the bundled template — DO NOT hand-roll a simpler version
 
-`Good Money Dashboard/schema/system-flow-map.html` is the living template (Senti palette: espresso/burgundy/cream/orange). Copy its skeleton for new projects; swap the palette to the project's brand. Keep the companion `.md` (editable outline + status table) in sync.
+**`template.html` ships in THIS skill folder. ALWAYS copy it to `<project>/schema/system-flow-map.html` and populate it** — it carries the full interactive engine (hand-positioned nodes with meaningful SHAPES, curved SVG wires, pan/zoom, hover-tracing, ⓘ teaching tooltips, status badges, click-to-read drawer, blocker arrows). To populate: swap the `:root` palette to the project brand (keep the status colors), replace the EXAMPLE panels/nodes with the project's real ones using the right shape class per node type, fill `TIPS{}` / `WHY{}` / `PANELTIPS{}`, wire the edges in `draw()` with `addPath(...)`, and set the header title + North-Star subtitle. Keep the companion `.md` (editable outline + status table) in sync.
+
+**❌ Failure mode to avoid (real, observed):** producing a plain CSS-grid of cards connected by text "→" arrows instead of the shape-coded, curved-wire, pan/zoom canvas. A grid of cards is NOT this artifact. The shapes carry meaning, the wires show flow you can trace, and the map pans/zooms — if those are missing, it's wrong. The bundled `template.html` already has all of it; start there, never from a blank file or from the markdown description alone.
+
+*(The Good Money Dashboard's `schema/system-flow-map.html` is the fully-populated real-world example the template was extracted from — but the template is self-contained, so you never need access to that file.)*
 
 ## Source of truth + regeneration cadence (standing rule)
 

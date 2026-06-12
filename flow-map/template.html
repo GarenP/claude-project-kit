@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<!--
+  ███ FLOW-MAP TEMPLATE — copy this file to <project>/schema/system-flow-map.html and POPULATE it. ███
+  This is the canonical rich interactive style: hand-positioned nodes with MEANINGFUL SHAPES, curved SVG
+  wires (not plain arrows), pan/zoom, hover-tracing, ⓘ teaching tooltips, status badges, and a click-to-read
+  drawer. DO NOT downgrade this to a grid of cards — the shapes, wires, and interactions are the point.
+
+  HOW TO POPULATE (replace the EXAMPLE content, keep the engine):
+   1. Swap the :root palette to the project's brand colors (keep the --built/--ghost/--blocked status colors).
+   2. Replace the EXAMPLE panels + nodes with the project's real ones. Shapes carry meaning:
+        .src = external feed/input (parallelogram) · .doc = document/artifact (folded page)
+        .proc = process/engine (double-strut box) · .store = data store (cylinder; add .hub for the hero)
+        .ui = screen (mini browser window) · .gate = gatekeeper (dark bar)
+      Status: default class = built/specced · add .wip = direction-set · add .todo = not-designed.
+   3. In the <script>, fill TIPS{} (plain-language "what it is" + optional "next" + optional [blockers])
+      and WHY{} (audience-relative "why it matters" — write for whoever the PROJECT serves) and
+      PANELTIPS{} (one per category panel), then wire the edges in draw() with addPath(...).
+   4. Set the header title + the NORTH-STAR subtitle line.
+  Build from the project's SPEC + ledger statuses, never from brainstorms. Regenerate on every spec change.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PROJECT — System Flow Map</title>
+<style>
+  :root{
+    /* EXAMPLE palette — swap to the project brand. Keep the status colors. */
+    --bg:#1a1d24; --panel:#232833; --cream:#eef1f6; --ink:#1c2130; --ink-soft:#566;
+    --accent:#5b8cff; --accent-soft:#9db8ff; --amber:#d8a23a; --wire:#7d8aa0;
+    --built:#3e8a4f; --ghost:#787066; --blocked:#b3402f;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--cream); font-family:'Karla',Georgia,serif;}
+  header{display:flex; align-items:baseline; gap:18px; padding:20px 34px 8px;}
+  header h1{font-weight:700; font-size:26px; margin:0;}
+  header .sub{color:var(--accent-soft); font-size:13px; max-width:900px; font-style:italic;}
+  .legend{padding:0 34px 10px; font-size:12.5px; color:#aab; display:flex; gap:16px; align-items:center; flex-wrap:wrap;}
+  .key{display:inline-flex; align-items:center; gap:6px;}
+  .sw{width:14px; height:14px; border-radius:7px; display:inline-block;}
+  .sw.g{background:var(--built);} .sw.a{background:var(--amber);} .sw.t{background:#4d463e; border:1px dotted #9c8d79;}
+  .hint{margin-left:auto; font-style:italic; color:#99a;}
+  .controls button{background:var(--panel); color:var(--cream); border:1px solid #44506a; border-radius:8px; font-size:13px; padding:4px 12px; cursor:pointer;}
+  .controls button:hover{background:var(--accent); color:var(--ink);}
+
+  #viewport{position:relative; height:80vh; margin:0 22px 26px; overflow:hidden; cursor:grab; border:1px solid #38415a; border-radius:14px;}
+  #viewport.dragging{cursor:grabbing}
+  #canvas{position:absolute; top:0; left:0; width:2200px; height:1000px; transform-origin:0 0;}
+  #wires{position:absolute; inset:0; width:100%; height:100%; pointer-events:none;}
+  .wire{fill:none; stroke:var(--wire); stroke-width:1.8; opacity:.55; transition:all .18s;}
+  .wire.trunk{stroke:var(--accent-soft); stroke-width:5; opacity:.8;}
+  .wire.out{stroke:var(--amber); stroke-width:2.4; opacity:.7;}
+  .wire.dot{stroke-dasharray:5 6; stroke:var(--amber); stroke-width:1.8;}
+  .wire.dim{opacity:.05;} .wire.hot{stroke:var(--accent); opacity:1; stroke-width:4;}
+  .wlabel{font-size:11px; fill:#cdd; letter-spacing:.04em;}
+  .wlabel.dim{opacity:.08} .wlabel.hot{fill:var(--accent-soft);}
+  .wire.blkwire{stroke:var(--blocked); stroke-width:4.5; stroke-dasharray:11 8; opacity:.95; animation:march .9s linear infinite;}
+  @keyframes march{to{stroke-dashoffset:-19;}}
+
+  .panel{position:absolute; border:1px solid rgba(91,140,255,.25); border-radius:14px; background:rgba(238,241,246,.035); z-index:1;}
+  .panel h3{position:absolute; top:-11px; left:16px; margin:0; background:var(--bg); padding:0 10px; font-size:12.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-soft); white-space:nowrap;}
+  .panel h3 small{color:#8896b5; letter-spacing:.03em; text-transform:none;}
+
+  .node{position:absolute; color:var(--ink); font-size:12.5px; line-height:1.35; padding:8px 12px; transition:transform .15s, opacity .18s; z-index:2; cursor:pointer;}
+  .node b{font-size:13px; display:block;}
+  .node small{color:var(--ink-soft); display:block; margin-top:1px; font-size:11.5px;}
+  .node:hover{transform:translateY(-2px) scale(1.03); z-index:4;}
+  .node.dim{opacity:.15}
+  .src{background:transparent; padding-left:16px;}
+  .src::before{content:''; position:absolute; inset:0; background:var(--cream); transform:skewX(-8deg); border-radius:5px; box-shadow:0 3px 12px rgba(0,0,0,.4), inset 3px 0 0 var(--built); z-index:-1;}
+  .doc{background:var(--cream); border-radius:5px 14px 5px 5px; box-shadow:0 3px 12px rgba(0,0,0,.4), inset 3px 0 0 var(--built);}
+  .doc::after{content:''; position:absolute; top:0; right:0; border-style:solid; border-width:0 15px 15px 0; border-color:var(--bg) var(--bg) #d8c9b2 #d8c9b2;}
+  .proc{background:var(--cream); border-radius:6px; box-shadow:0 3px 12px rgba(0,0,0,.4); border-left:5px double var(--accent); border-right:5px double var(--accent); text-align:center;}
+  .store{background:var(--cream); border-radius:14px 14px 11px 11px; padding-top:20px; text-align:center; box-shadow:0 4px 16px rgba(0,0,0,.5);}
+  .store::before{content:''; position:absolute; top:0; left:0; right:0; height:20px; background:#dfe5ee; border-radius:50% / 100% 100% 0 0; border-bottom:1.5px solid rgba(60,70,100,.35);}
+  .store::after{content:''; position:absolute; bottom:-1px; left:0; right:0; height:12px; background:inherit; border-radius:50% / 0 0 100% 100%;}
+  .hub{padding-top:30px; box-shadow:0 8px 30px rgba(0,0,0,.6), 0 0 0 3px rgba(91,140,255,.35);}
+  .hub::before{height:30px;} .hub b{font-size:16px; letter-spacing:.04em;}
+  .ui{background:var(--cream); border-radius:8px; padding-top:19px; box-shadow:0 3px 12px rgba(0,0,0,.4);}
+  .ui::before{content:'● ● ●'; position:absolute; top:3px; left:9px; font-size:6.5px; letter-spacing:2px; color:var(--accent);}
+  .ui::after{content:''; position:absolute; top:13px; left:0; right:0; border-top:1.5px solid rgba(60,70,100,.3);}
+  .gate{background:var(--panel); color:var(--cream); border-radius:8px; text-align:center; box-shadow:0 3px 14px rgba(0,0,0,.5); border:1px solid #44506a;}
+  .gate b{color:var(--accent-soft);} .gate small{color:#aab;}
+  .node.wip:not(.src){background:#f2e3b8; border:1.5px dashed var(--amber);}
+  .wip.src::before{background:#f2e3b8; box-shadow:0 3px 12px rgba(0,0,0,.4), inset 3px 0 0 var(--amber);}
+  .store.wip::before{background:#e4cf99;}
+  .todo{background:rgba(238,241,246,.08)!important; color:#b5a896; border:1.5px dotted var(--ghost); box-shadow:none!important;}
+  .todo b{color:#c9bba6} .todo small{color:#9c8d79}
+
+  .sbadge{position:absolute; top:-8px; left:-8px; min-width:17px; height:17px; border-radius:9px; font-size:10.5px; line-height:17px; text-align:center; font-weight:700; box-shadow:0 2px 6px rgba(0,0,0,.5); z-index:5; pointer-events:none; padding:0 2px;}
+  .sbadge.done{background:var(--built); color:#f2efe6;} .sbadge.wip{background:var(--amber); color:#1c2130;} .sbadge.todo{background:#4d463e; color:#cfc6b8; border:1px dotted #9c8d79;}
+  .idot{position:absolute; top:-7px; right:-7px; width:16px; height:16px; border-radius:50%; background:var(--accent); color:var(--ink); font-size:10.5px; font-weight:700; font-style:italic; line-height:16px; text-align:center; box-shadow:0 2px 6px rgba(0,0,0,.45); z-index:5; pointer-events:none;}
+  .blktag{position:absolute; background:var(--blocked); color:#f6efe3; font-size:11.5px; font-weight:700; padding:2px 10px; border-radius:11px; z-index:6; white-space:nowrap; box-shadow:0 2px 8px rgba(0,0,0,.55);}
+  .blktag.then{background:var(--cream); color:var(--ink); border:1px solid var(--amber);}
+  .node.blk{box-shadow:0 0 0 3px var(--blocked), 0 6px 20px rgba(0,0,0,.55)!important; opacity:1!important;}
+  .node.blk.dim{opacity:1!important;}
+
+  #tip{position:absolute; display:none; max-width:320px; background:var(--bg); color:#f2e7d4; border:1px solid var(--accent); border-radius:10px; padding:11px 14px; font-size:13.5px; line-height:1.5; z-index:50; box-shadow:0 8px 26px rgba(0,0,0,.65); pointer-events:none;}
+  #tip b{color:var(--accent-soft); display:block; margin-bottom:3px; font-size:12.5px; letter-spacing:.08em; text-transform:uppercase;}
+  #tip .nx{display:block; margin-top:7px; padding-top:6px; border-top:1px solid rgba(91,140,255,.35); color:#ecc274; font-size:12.5px;}
+  #tip .bl{display:block; margin-top:4px; color:#d9a04e; font-size:12.5px; font-weight:700;}
+  #drawer{position:fixed; top:0; right:0; width:410px; max-width:92vw; height:100%; background:linear-gradient(180deg,#262b38,var(--bg)); border-left:2px solid var(--accent); z-index:999; padding:26px 28px 44px; overflow-y:auto; box-shadow:-12px 0 44px rgba(0,0,0,.65); transform:translateX(105%); transition:transform .28s ease; font-size:14.5px; line-height:1.62; color:#f0e5d2;}
+  #drawer.open{transform:translateX(0);}
+  #drawer h2{font-size:23px; margin:8px 0 12px; color:var(--cream);}
+  #drawer h4{color:var(--accent-soft); font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; margin:22px 0 6px;}
+  #drawer .pill{display:inline-block; padding:3px 13px; border-radius:12px; font-size:12px; font-weight:700;}
+  #drawer .pill.done{background:var(--built); color:#f2efe6;} #drawer .pill.wip{background:var(--amber); color:#1c2130;} #drawer .pill.todo{background:#4d463e; color:#cfc6b8;} #drawer .pill.cat{background:var(--panel); color:var(--cream); border:1px solid var(--accent-soft);}
+  #drawer .waits{color:#e89a8a; font-weight:700;}
+  #drx{position:absolute; top:16px; right:16px; background:none; border:1px solid #44506a; color:var(--cream); border-radius:8px; width:31px; height:31px; cursor:pointer;}
+  #drx:hover{background:var(--accent); color:var(--ink);}
+</style>
+</head>
+<body>
+<header><h1>PROJECT — System Flow Map</h1><span class="sub">★ NORTH STAR: &lt;the real problem this project solves, in the builder's words&gt; · built from SPEC + ledger</span></header>
+<div class="legend">
+  <span class="key" style="color:#99a">⬗ feed · ▤ process · ⬭ store · ▢ screen · ▭ gate</span>
+  <span class="key"><span class="sw g"></span>✓ built/specced</span>
+  <span class="key"><span class="sw a"></span>◐ in design</span>
+  <span class="key"><span class="sw t"></span>○ planned</span>
+  <span class="hint">scroll = zoom · drag = pan · hover = trace + ⓘ · click a node or category for the full story</span>
+  <span class="controls"><button id="fit">⟲ fit</button></span>
+</div>
+
+<div id="viewport"><div id="canvas">
+  <svg id="wires"></svg>
+
+  <!-- ███ EXAMPLE CONTENT — replace all of this with the project's real panels + nodes ███ -->
+  <div class="panel" id="srcpanel" style="left:24px; top:80px; width:300px; height:300px;"><h3>Sources <small>· where data comes from</small></h3></div>
+  <div class="panel" id="storepanel" style="left:540px; top:80px; width:320px; height:300px;"><h3>Storage</h3></div>
+  <div class="panel" id="engpanel" style="left:1080px; top:80px; width:280px; height:300px;"><h3>Engines</h3></div>
+  <div class="panel" id="uipanel" style="left:1580px; top:80px; width:260px; height:300px;"><h3>Screens</h3></div>
+
+  <div class="node src"  id="feed"  style="left:44px; top:130px; width:260px;"><b>Example feed</b><small>an external input</small></div>
+  <div class="node doc"  id="docin" style="left:44px; top:230px; width:260px;"><b>Example doc</b><small>an uploaded artifact</small></div>
+  <div class="node store hub" id="db" style="left:560px; top:150px; width:280px; height:150px;"><b>CORE STORE</b><small>the single source of truth</small></div>
+  <div class="node proc wip" id="engine" style="left:1100px; top:190px; width:240px;"><b>Example engine</b><small>does the thinking</small></div>
+  <div class="node ui todo" id="screen" style="left:1600px; top:190px; width:200px;"><b>Example screen</b><small>what the user sees</small></div>
+</div></div>
+
+<script>
+const canvas=document.getElementById('canvas'), svg=document.getElementById('wires');
+const NS='http://www.w3.org/2000/svg'; const pathMembers=[]; const blkTemp=[];
+function P(el){let x=0,y=0,n=el;while(n&&n!==canvas){x+=n.offsetLeft;y+=n.offsetTop;n=n.offsetParent;}return{x,y,w:el.offsetWidth,h:el.offsetHeight};}
+function R(id){return P(document.getElementById(id));}
+function addPath(d, cls, members, label, lx, ly, arrow=true){
+  const p=document.createElementNS(NS,'path'); p.setAttribute('d',d); p.setAttribute('class','wire '+cls);
+  if(arrow) p.setAttribute('marker-end','url(#arr)'); svg.appendChild(p); pathMembers.push({el:p, members:new Set(members)});
+  if(label){const t=document.createElementNS(NS,'text'); t.setAttribute('x',lx); t.setAttribute('y',ly); t.setAttribute('text-anchor','middle'); t.setAttribute('class','wlabel'); t.textContent=label; svg.appendChild(t); pathMembers.push({el:t, members:new Set(members)});}
+}
+function curve(a,b){const x1=a.x+a.w,y1=a.y+a.h/2,x2=b.x,y2=b.y+b.h/2,mx=(x1+x2)/2; return `M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`;}
+function draw(){
+  svg.innerHTML=''; pathMembers.length=0;
+  svg.setAttribute('viewBox',`0 0 ${canvas.offsetWidth} ${canvas.offsetHeight}`);
+  const defs=document.createElementNS(NS,'defs');
+  defs.innerHTML=`<marker id="arr" viewBox="0 0 10 8" refX="9" refY="4" markerWidth="9" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,4 L0,8 z" fill="#9aa6c0"/></marker><marker id="arrblk" viewBox="0 0 10 8" refX="9" refY="4" markerWidth="10" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,4 L0,8 z" fill="#b3402f"/></marker>`;
+  svg.appendChild(defs);
+  /* ███ EXAMPLE WIRES — replace with the project's real edges. Trunk feeds into the hub; spokes fan out. ███ */
+  addPath(curve(R('feed'),R('db')),'trunk',['feed','db'],'into the store',430,180);
+  addPath(curve(R('docin'),R('db')),'',['docin','db']);
+  addPath(curve(R('db'),R('engine')),'out',['db','engine']);
+  addPath(curve(R('engine'),R('screen')),'out',['engine','screen']);
+}
+function highlight(id,on){
+  const linked=new Set([id]);
+  pathMembers.forEach(({el,members})=>{ el.classList.remove('hot','dim'); if(on){ if(members.has(id)){ el.classList.add('hot'); members.forEach(m=>linked.add(m)); } else el.classList.add('dim'); } });
+  document.querySelectorAll('.node').forEach(n=>{ n.classList.remove('dim'); if(on && !linked.has(n.id)) n.classList.add('dim'); });
+}
+
+/* ███ TIPS: [title, what-it-is, optional "next" line, optional [blocker node ids]] — one per node ███ */
+const TIPS={
+  feed:['Example feed','Plain-words explanation of what this input is.'],
+  docin:['Example doc','What this uploaded artifact is and why it matters.'],
+  db:['Core store','The filing cabinet at the heart of the system — everything reads from here.'],
+  engine:['Example engine','What this process does, in plain words.','what gets decided next, and where',['db']],
+  screen:['Example screen','What the user actually sees and does here.','build detail',['engine']]
+};
+/* ███ WHY: audience-relative "why it matters" — write for whoever the PROJECT serves ███ */
+const WHY={ db:'One organized, current picture — the thing the whole tool stands on.' };
+/* ███ PANELTIPS: [title, what-this-layer-does, why-it-matters, optional next] — one per category panel ███ */
+const PANELTIPS={
+  srcpanel:['Sources','Where the system gets its information.','Decisions rest on real inputs, not guesses.'],
+  storepanel:['Storage','The organized memory of the system.','One source of truth every part reads from.'],
+  engpanel:['Engines','Where data turns into decisions/actions.','This is where the tool earns its keep.'],
+  uipanel:['Screens','What the user looks at.','One clear thing to do, revealed as earned.']
+};
+
+const tip=document.createElement('div'); tip.id='tip'; canvas.appendChild(tip);
+const PILL={done:['✓ built / specced','Fully designed and locked into the plan.'],wip:['◐ in design','Direction chosen; details land in the session named below.'],todo:['○ planned','Has a home and a place in the sequence; design not started.']};
+const dr=document.createElement('div'); dr.id='drawer'; dr.innerHTML='<button id="drx">✕</button><div id="drbody"></div>'; document.body.appendChild(dr);
+document.getElementById('drx').addEventListener('click',()=>dr.classList.remove('open'));
+window.addEventListener('keydown',e=>{if(e.key==='Escape')dr.classList.remove('open');});
+
+document.querySelectorAll('.panel').forEach(p=>{ const t=PANELTIPS[p.id]; if(!t)return;
+  const d=document.createElement('span'); d.className='idot'; d.textContent='i'; p.appendChild(d); p.style.cursor='pointer';
+  p.addEventListener('mouseenter',()=>{ tip.innerHTML='<b>'+t[0]+' — system layer</b>'+t[1]; const pp=P(p); tip.style.display='block'; tip.style.left='0px'; tip.style.top='0px'; const th=tip.offsetHeight; let x=pp.x+pp.w+14; if(x+330>canvas.offsetWidth) x=pp.x-334; if(x<4) x=pp.x+12; let y=pp.y+6; if(y+th>canvas.offsetHeight-8) y=canvas.offsetHeight-th-8; tip.style.left=x+'px'; tip.style.top=y+'px'; });
+  p.addEventListener('mouseleave',()=>{tip.style.display='none';});
+  p.addEventListener('click',e=>{e.stopPropagation(); let h='<span class="pill cat">SYSTEM LAYER</span><h2>'+t[0]+'</h2><h4>What this layer does</h4><p>'+t[1]+'</p><h4>Why it matters</h4><p>'+t[2]+'</p>'+(t[3]?'<h4>What happens next</h4><p>'+t[3]+'</p>':''); document.getElementById('drbody').innerHTML=h; dr.classList.add('open'); });
+});
+
+document.querySelectorAll('.node').forEach(n=>{
+  const t=TIPS[n.id];
+  if(t){const d=document.createElement('span'); d.className='idot'; d.textContent='i'; n.appendChild(d);}
+  const st=n.classList.contains('todo')?['todo','○']:n.classList.contains('wip')?['wip','◐']:['done','✓'];
+  const sb=document.createElement('span'); sb.className='sbadge '+st[0]; sb.textContent=st[1]; n.appendChild(sb);
+  if(t){ n.addEventListener('click',e=>{e.stopPropagation();
+    let h='<span class="pill '+st[0]+'">'+PILL[st[0]][0]+'</span><h2>'+t[0]+'</h2><p>'+PILL[st[0]][1]+'</p><h4>What it is</h4><p>'+t[1]+'</p>';
+    if(WHY[n.id]) h+='<h4>Why it matters</h4><p>'+WHY[n.id]+'</p>';
+    if(t[2]) h+='<h4>What happens next</h4><p>'+t[2]+'</p>';
+    if(t[3]) h+='<h4>What has to come first</h4><p class="waits">⛓ '+t[3].map(b=>TIPS[b][0]).join(' → ')+'</p>';
+    document.getElementById('drbody').innerHTML=h; dr.classList.add('open'); }); }
+  n.addEventListener('mouseenter',()=>{ highlight(n.id,true);
+    if(t){ let html='<b>'+t[0]+'</b>'+t[1]; if(t[2]) html+='<span class="nx">▸ next: '+t[2]+'</span>';
+      if(t[3]) html+='<span class="bl">⛓ waits on: '+t[3].map(b=>TIPS[b][0]).join(' → ')+'</span>';
+      tip.innerHTML=html;
+      if(t[3]){ const h=P(n); t[3].forEach(b=>{ const bn=document.getElementById(b); bn.classList.add('blk'); const a=P(bn);
+        const c1={x:a.x+a.w/2,y:a.y+a.h/2}, c2={x:h.x+h.w/2,y:h.y+h.h/2}; const dx=c2.x-c1.x, dy=c2.y-c1.y, L=Math.hypot(dx,dy)||1;
+        const s0=(Math.max(a.w,a.h)/2+6)/L, s1=1-(Math.max(h.w,h.h)/2+12)/L;
+        const pth=document.createElementNS(NS,'path'); pth.setAttribute('d',`M ${c1.x+dx*s0} ${c1.y+dy*s0} L ${c1.x+dx*s1} ${c1.y+dy*s1}`); pth.setAttribute('class','wire blkwire'); pth.setAttribute('marker-end','url(#arrblk)'); svg.appendChild(pth); blkTemp.push(pth);
+        const tag=document.createElement('div'); tag.className='blktag'; tag.textContent='① build first'; tag.style.left=a.x+'px'; tag.style.top=(a.y-26)+'px'; canvas.appendChild(tag); blkTemp.push(tag); });
+        const tag2=document.createElement('div'); tag2.className='blktag then'; tag2.textContent='② then this unlocks'; tag2.style.left=h.x+'px'; tag2.style.top=(h.y-26)+'px'; canvas.appendChild(tag2); blkTemp.push(tag2); }
+      const p=P(n); tip.style.display='block'; tip.style.left='0px'; tip.style.top='0px'; const th=tip.offsetHeight;
+      let x=p.x+p.w+14, y=p.y-4; if(x+330>canvas.offsetWidth) x=p.x-334; if(y+th>canvas.offsetHeight-8) y=canvas.offsetHeight-th-8; if(y<4) y=4; if(x<4) x=4;
+      tip.style.left=x+'px'; tip.style.top=y+'px'; }});
+  n.addEventListener('mouseleave',()=>{ highlight(n.id,false); tip.style.display='none'; document.querySelectorAll('.node.blk').forEach(b=>b.classList.remove('blk')); blkTemp.forEach(el=>el.remove()); blkTemp.length=0; });
+});
+
+const vp=document.getElementById('viewport'); let k=1,tx=0,ty=0,drag=null;
+function apply(){canvas.style.transform=`translate(${tx}px,${ty}px) scale(${k})`;}
+function fit(){const r=vp.getBoundingClientRect(); k=Math.min(r.width/canvas.offsetWidth,r.height/canvas.offsetHeight)*.985; tx=(r.width-canvas.offsetWidth*k)/2; ty=(r.height-canvas.offsetHeight*k)/2; apply();}
+vp.addEventListener('wheel',e=>{e.preventDefault(); const r=vp.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top; const f=e.deltaY<0?1.13:1/1.13,nk=Math.min(8,Math.max(.25,k*f)); tx=mx-(mx-tx)*(nk/k); ty=my-(my-ty)*(nk/k); k=nk; apply();},{passive:false});
+vp.addEventListener('mousedown',e=>{drag={x:e.clientX-tx,y:e.clientY-ty}; vp.classList.add('dragging');});
+window.addEventListener('mousemove',e=>{if(drag){tx=e.clientX-drag.x; ty=e.clientY-drag.y; apply();}});
+window.addEventListener('mouseup',()=>{drag=null; vp.classList.remove('dragging');});
+document.getElementById('fit').addEventListener('click',fit);
+window.addEventListener('resize',()=>{draw();fit();});
+draw(); fit();
+</script>
+</body>
+</html>

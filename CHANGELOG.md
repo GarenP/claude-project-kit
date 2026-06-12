@@ -6,6 +6,10 @@ The kit is dogfooded on a live project ("Good Money Dashboard") — most improve
 
 ## 2026-06-12
 
+### Fixed
+- **flow-map: self-contained template (`template.html`).** The skill used to say "copy the Good Money Dashboard's map as the template" — but that file only exists on the author's machine, so other users' AIs improvised a plain grid-of-cards instead of the rich shape-coded, curved-wire, pan/zoom canvas. The full interactive engine now ships INSIDE the skill folder as `template.html`; the skill instructs copy-and-populate and explicitly forbids downgrading to a card grid. *Born from a real user getting the degraded version after her first grill.*
+- **project-init: the system-flow-map now auto-generates** (both `.md` and the rich `.html` from the bundled template) the moment a first spec + ledger exist — it was being skipped and left for an on-request ask.
+
 ### Added
 - **project-init: the North Star (anti-drift).** Layer 1 of the interview now EXCAVATES the real, lived problem — narrate the actual painful workflow step by step, why-now, mechanism-vs-outcome, and what success FEELS like — instead of accepting a one-line abstract answer; it also handles personal/internal tools (not just sellable products). That deep "why" is written as a prominent North Star block at the top of the project's CLAUDE.md, re-read every session, with a drift-guard rule: before proposing anything, re-ground in the real problem; if drifting generic, stop and re-anchor. *Born from watching a real non-technical user (a facility coordinator building her own work dashboard) drift because the AI never deeply understood her actual job or why she was building the tool.*
 - **Grill Me:** the spawn-scan — when a new idea arrives, fire 2–3 system-aware curiosity questions (how does it fit the current system? · what could it interfere with? · what's the blind spot?) BEFORE developing it. A frontline catch at idea-arrival, distinct from the gap-scan (post-checkpoint) and consequence-scan (post-lock). Near-free since grill context is already loaded.
