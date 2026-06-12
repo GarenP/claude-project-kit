@@ -100,6 +100,9 @@ Standard artifact: sources → engines → surfaces, status-colored, built FROM 
 ### 8. `ui_versions/` (if Q5 said yes)
 PROTECTED drop zone for frontend snapshot zips. Never delete the newest zip; older only with explicit OK. Every new zip gets a conformance skim against the spec's locked sections; each divergence becomes a ledger row. Mid-build incongruence is EXPECTED — noted, not flagged as a problem.
 
+### 8b. Security baseline (if the product uses AI / ingests outside data / holds sensitive data)
+If the interview flagged an AI product, copy `security-baseline.md` (ships beside this skill) into the project as a standard reference, and treat its practices as defaults: read outside text in a tool-less sealed room, block outbound auto-loading of AI-produced images/links, strip trick-characters with plain code before any AI reads text, tag saved memory by trust level, lock the local server, sign + ask-before-apply for updates (security fixes free for all, features gated), monthly red-teaming on an isolated copy, and never run unvetted marketplace skills. At the pre-build gate, have a security advisor re-ground these against current attack research (the field moves fast).
+
 ### 9. `git init` + first commit
 Commit the scaffold as the first coherent unit. If the user wants off-machine backup, create private remote(s) — quarantined raw data gets its own private repo, never the public one.
 

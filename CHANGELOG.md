@@ -7,6 +7,7 @@ The kit is dogfooded on a live project ("Good Money Dashboard") — most improve
 ## 2026-06-12
 
 ### Added
+- **project-init:** security baseline — a plain-language security-practices doc (`security-baseline.md`) scaffolded for any AI product: the "lethal trifecta" principle, tool-less ingestion, outbound-exfil blocking, trick-character stripping, memory provenance tags, signed ask-before-apply updates (security free for all / features gated), monthly red-teaming, marketplace-skill caution. *Distilled from a live security review that caught a fleet-wide auto-update backdoor and an outbound data-leak path before they shipped.*
 - **project-init:** the final brain-check gate — last step before build reviews the shipped AI's system prompt/CLAUDE.md for completeness, consistency, and loose ends. *Born from a real oversight: the advisor identity was nearly designed into conversation history (where it decays) instead of the system prompt (where it's re-sent every turn).*
 - **project-init:** changelog discipline — when the kit edits its own skills, every change ships a CHANGELOG entry in the same commit, with the real bug/session that prompted it.
 - **project-init:** Phase 0 — gauge the user's technical level FIRST, then tailor all language to it (non-coders get plain words + a setup sentence on every jargon term). Reworked the delivery-substrate question into easiest→hardest options with pros/cons.
