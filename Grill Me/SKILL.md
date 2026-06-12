@@ -50,6 +50,7 @@ Scan what you just captured — **the user should never be the one to spot these
 - **Standing-rule scan (human-in-the-loop):** does this input contain something that must shape EVERY future loop — a process correction, a recurring preference, a philosophy-grade principle? Don't trust yourself to "remember" it as a virtue. Name it immediately — "this looks like a standing rule — want it in CLAUDE.md / the skill / memory?" — and on confirm, write it to the durable home in the same action.
 - **Existing-home check:** before proposing any NEW store, structure, file, registry, or section — SEARCH for an existing home that already covers it. Don't invent a parallel thing the project already has.
 - **Ambiguous referent:** if the user's number/date/threshold references an unnamed thing ("the day-3 unlock", "that panel"), ask the open question ("which unlock do you mean?") — never silently bind it to your best guess or offer only a guessed binary.
+- **Consequence scan (on every RESOLVED decision):** the moment an answer locks a decision, enumerate the second-order questions it just spawned — lifecycle rules, edge cases, "what does this imply for X?" — and either grill them immediately as a sub-question (Q2 → Q2b) or queue them explicitly with an owner/venue. The gap-scan items above catch what's wrong in what was SAID; this catches what the new decision makes askable that nobody has said yet. A decision with unexamined consequences is a loose end wearing a RESOLVED stamp.
 
 ## Long-session care (ADHD-aware)
 
