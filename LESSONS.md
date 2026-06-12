@@ -24,6 +24,11 @@ Every entry is a real-world miss that taught the kit something. The intelligence
 - **Miss:** when that template was extracted, the bottom build-status board got left out, so generated maps shipped without it. **Fix:** added the sections to the template; skill marks them required.
 - **The family this kills:** any instruction that assumes access to something only the author has. New rule of thumb: a skill must produce its best output for someone who has ONLY the skill — and when extracting a template from a real artifact, verify every standard part survived.
 
+## Principle: stateful visuals need their STATE LOGIC re-checked, not just their content
+*(cluster: blocker-arrows-didn't-clear)*
+- **Miss:** on the system-flow-map, completing a dependency (e.g. the SDK wrapper) didn't clear the "build first" arrows on the thing it was blocking — nothing re-checked the parent/child state when a section completed. **Fix:** blockers now read each node's CURRENT status and auto-drop when done (`activeBlk()`); a new "visual / UI state-change correctness" battery lens checks that every state and transition renders right.
+- **The family this kills:** any visual where a build updates the content but nothing re-verifies the state-transition logic (hover, completion, empty, error states). New rule of thumb: when a visual has STATES, test the transitions, not just the static picture.
+
 ## Principle: self-improvement needs a stated objective, or it gold-plates
 *(cluster: aimless-improvement)*
 - **Insight (not a bug — caught proactively):** an unguided "self-improving" system tinkers, adds complexity, optimizes the wrong thing. **Fix:** the **Commander's Intent** — a stated end-state every improvement is judged against ("does this serve it?"). Lets the AI use initiative while staying coherent.

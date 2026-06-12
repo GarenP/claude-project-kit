@@ -254,6 +254,8 @@ document.querySelectorAll('.panel').forEach(p=>{ const t=PANELTIPS[p.id]; if(!t)
   p.addEventListener('click',e=>{e.stopPropagation(); let h='<span class="pill cat">SYSTEM LAYER</span><h2>'+t[0]+'</h2><h4>What this layer does</h4><p>'+t[1]+'</p><h4>Why it matters</h4><p>'+t[2]+'</p>'+(t[3]?'<h4>What happens next</h4><p>'+t[3]+'</p>':''); document.getElementById('drbody').innerHTML=h; dr.classList.add('open'); });
 });
 
+/* a blocker auto-drops from "waits on" once its node is DONE (no longer .todo/.wip) — self-maintaining */
+function activeBlk(arr){return (arr||[]).filter(b=>{const bn=document.getElementById(b);return bn&&(bn.classList.contains('todo')||bn.classList.contains('wip'));});}
 document.querySelectorAll('.node').forEach(n=>{
   const t=TIPS[n.id];
   if(t){const d=document.createElement('span'); d.className='idot'; d.textContent='i'; n.appendChild(d);}
@@ -263,13 +265,13 @@ document.querySelectorAll('.node').forEach(n=>{
     let h='<span class="pill '+st[0]+'">'+PILL[st[0]][0]+'</span><h2>'+t[0]+'</h2><p>'+PILL[st[0]][1]+'</p><h4>What it is</h4><p>'+t[1]+'</p>';
     if(WHY[n.id]) h+='<h4>Why it matters</h4><p>'+WHY[n.id]+'</p>';
     if(t[2]) h+='<h4>What happens next</h4><p>'+t[2]+'</p>';
-    if(t[3]) h+='<h4>What has to come first</h4><p class="waits">⛓ '+t[3].map(b=>TIPS[b][0]).join(' → ')+'</p>';
+    {const ab=activeBlk(t[3]); if(ab.length) h+='<h4>What has to come first</h4><p class="waits">⛓ '+ab.map(b=>TIPS[b][0]).join(' → ')+'</p>';}
     document.getElementById('drbody').innerHTML=h; dr.classList.add('open'); }); }
   n.addEventListener('mouseenter',()=>{ highlight(n.id,true);
-    if(t){ let html='<b>'+t[0]+'</b>'+t[1]; if(t[2]) html+='<span class="nx">▸ next: '+t[2]+'</span>';
-      if(t[3]) html+='<span class="bl">⛓ waits on: '+t[3].map(b=>TIPS[b][0]).join(' → ')+'</span>';
+    if(t){ const ab=activeBlk(t[3]); let html='<b>'+t[0]+'</b>'+t[1]; if(t[2]) html+='<span class="nx">▸ next: '+t[2]+'</span>';
+      if(ab.length) html+='<span class="bl">⛓ waits on: '+ab.map(b=>TIPS[b][0]).join(' → ')+'</span>';
       tip.innerHTML=html;
-      if(t[3]){ const h=P(n); t[3].forEach(b=>{ const bn=document.getElementById(b); bn.classList.add('blk'); const a=P(bn);
+      if(ab.length){ const h=P(n); ab.forEach(b=>{ const bn=document.getElementById(b); bn.classList.add('blk'); const a=P(bn);
         const c1={x:a.x+a.w/2,y:a.y+a.h/2}, c2={x:h.x+h.w/2,y:h.y+h.h/2}; const dx=c2.x-c1.x, dy=c2.y-c1.y, L=Math.hypot(dx,dy)||1;
         const s0=(Math.max(a.w,a.h)/2+6)/L, s1=1-(Math.max(h.w,h.h)/2+12)/L;
         const pth=document.createElementNS(NS,'path'); pth.setAttribute('d',`M ${c1.x+dx*s0} ${c1.y+dy*s0} L ${c1.x+dx*s1} ${c1.y+dy*s1}`); pth.setAttribute('class','wire blkwire'); pth.setAttribute('marker-end','url(#arrblk)'); svg.appendChild(pth); blkTemp.push(pth);
