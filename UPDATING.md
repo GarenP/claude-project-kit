@@ -1,5 +1,21 @@
 # Updating the kit — without losing any of your work
 
+## Easiest way: just tell Claude "update the project kit"
+You don't need to copy any URLs or download anything by hand. In your terminal, just say:
+> **"update the project kit"** (or "update my project-init skills")
+
+Claude knows the source and does it for you. **Canonical source: `https://github.com/GarenP/claude-project-kit`**
+
+**The exact procedure Claude follows when you ask to update (Claude: do this):**
+1. Clone the repo fresh to a temp folder (`git clone https://github.com/GarenP/claude-project-kit`), or `git pull` if a local clone already exists.
+2. Copy the four skill folders — `project-init`, `Grill Me`, `flow-map`, `battery` — into the user's skills directory (`~/.claude/skills/` on Mac/Linux, `C:\Users\<user>\.claude\skills\` on Windows), overwriting ONLY those four folders.
+3. Confirm what changed (read the new `CHANGELOG.md` and summarize it for the user).
+4. **NEVER touch the user's project files.** Skills update; projects don't. Then they keep working — an already-set-up project continues where it left off and backfills any newly-added interview questions (see the no-restart guard).
+
+---
+
+
+
 **The one thing to know: updating these skills NEVER touches your project.** The skills live in one place; your project lives in another. They're separate.
 
 - **The skills** live in `~/.claude/skills/` (Mac/Linux) or `C:\Users\<you>\.claude\skills\` (Windows). Updating them = replacing those skill folders.

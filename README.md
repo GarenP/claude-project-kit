@@ -30,4 +30,4 @@ It will take it from there — including explaining the other three skills to yo
 
 ## Updates
 
-New versions roll out to this repo — re-download and overwrite the four folders to update.
+New versions roll out to this repo. **To update, just tell Claude in your terminal: "update the project kit."** It pulls the latest from `https://github.com/GarenP/claude-project-kit` and refreshes the four skill folders for you — no copy-pasting URLs, and **it never touches your project** (skills update; your work doesn't). An already-set-up project picks up where it left off and backfills any newly-added questions. Details in [`UPDATING.md`](UPDATING.md).

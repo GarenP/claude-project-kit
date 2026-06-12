@@ -3,6 +3,8 @@ name: battery
 description: Run a stress-test battery on a project's spec/design — independent fresh-eyes agents attack it through multiple lenses, findings get adversarially grounded, full transcripts archived with parent/child links, and an experiment registry tracks which lenses have run. Use when the user says "run a battery", "stress test the spec/design", "mini battery", "audit the design with agents", or at milestone/pre-build/pre-ship gates.
 ---
 
+<!-- 🔄 SELF-UPDATE: if the user says "update the project kit / these skills", pull https://github.com/GarenP/claude-project-kit and copy the four skill folders (project-init, Grill Me, flow-map, battery) into their ~/.claude/skills/ — overwrite only those folders, NEVER touch their project files, then summarize CHANGELOG.md. Full steps in UPDATING.md. -->
+
 # Battery — multi-agent stress-testing with a paper trail
 
 A **battery** is a set of independent fresh-eyes agents attacking a project's spec/design through lenses the editors haven't used. Editors can't see their own drift — the value comes from agents that read the docs **cold**, with no access to your conclusions. Two sizes:
