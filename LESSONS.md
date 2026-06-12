@@ -1,6 +1,6 @@
 # Lessons — the reactive-learning half of the kit's self-improvement
 
-Every entry is a real-world miss that taught the kit something. The intelligence is in the **clusters**: when several misses share a root cause, we abstract a **principle** that kills the whole family — not just the instance. Each fix is judged against the kit's Commander's Intent (a fast, clean, buildable spec with minimal user friction). Newest clusters on top.
+Every entry is a real-world miss that taught the kit something. The intelligence is in the **clusters**: when several misses share a root cause, we abstract a **principle** that kills the whole family — not just the instance. Each fix is judged against the kit's full Commander's Intent (a **complete**, clean, **buildable** spec — fast, low-friction, the user **educated** along the way, and **as few bugs as possible at build** — see project-init for the full statement; never the speed-only short form). Newest clusters on top.
 
 > How this works: a miss surfaces in real use → it's logged here → a fix is proposed → on the owner's confirm, the fix goes into the skill + a "born from real X" CHANGELOG note. Propose-and-confirm, never silent self-rewrite.
 
