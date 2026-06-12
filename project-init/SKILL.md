@@ -35,7 +35,7 @@ Never scaffold blind. The point of this interview is **drift-proofing**: the hig
 **Layer 4 — Boundaries (what keeps it safe):**
 12. **Hard constraints / non-negotiables** — e.g. "completely standalone, never wired into my other systems," "ships blank-default and must run from a fresh copy." These get ⛔ headline placement in CLAUDE.md.
 13. **Quarantine needs** — explain it first: "some material helps us *design* the thing but must never end up *inside* the thing we sell — other people's books or courses, client data, your personal info. Is there anything like that here?" If yes, `_NEVER-SHIP/` + ship gates.
-14. **What is explicitly NOT in v1?** Name the parked things out loud (cloud tier, telemetry, extra panels) — scope creep dies in this answer.
+14. **What is explicitly NOT in v1?** Name the parked things out loud (cloud tier, telemetry, extra panels) — scope creep dies in this answer. (This question seeds the MVP scope-lock below — don't fully resolve it here, just collect the candidates.)
 
 **Layer 5 — Philosophy (the feature-rejecting principles):**
 15. **The design principles** — explain the goal before asking: "these are the 3–8 rules of taste for this product — when a cool feature idea shows up six weeks from now, these rules decide whether it gets in. Things like 'every screen pushes ONE action' or 'works on your machine forever, no internet required.' What rules like that do you already feel strongly about?" Each must be concrete enough to kill a feature idea on contact.
@@ -43,6 +43,18 @@ Never scaffold blind. The point of this interview is **drift-proofing**: the hig
 17. **Does the product itself carry AI instructions?** If yes, the dual-CLAUDE.md routing rule applies (below).
 
 Write the answers into the scaffolded files in the same session — the interview IS the content. Layers 1–3 seed the spec/PRD skeleton (§overview, §business model, §target buyer); layers 4–5 seed CLAUDE.md.
+
+## Phase 1.5 — MVP scope-lock (do this BEFORE scaffolding anything)
+
+**The single biggest project-killer is scope overwhelm.** Before any structure gets built, lock the MVP — the minimum version that fixes the tool's major focus — and push everything else into later tiers. Run it as a short drill (it may take some back-and-forth; that's the point):
+
+1. **List every capability that came up** in the interview — features, panels, integrations, automations, all of it.
+2. **Apply the one test to each:** *does the core promise (the Layer-1 one-sentence purpose) break without this?* If the answer is no, it is NOT MVP — no matter how good the idea is.
+3. **Sort into tiers:** **Tier 1 / MVP** = only what survived the test — the smallest thing that can be put in front of a real user and fix the main problem. **Tier 2 / Phase 2** = valuable but the promise survives without it. **Tier 3 / someday** = everything else. Good ideas don't die here — they get a *home* (the spec's tier table + the parked-threads file), which is exactly what makes it safe to exclude them.
+4. **Write the tier table into the spec skeleton** and organize EVERYTHING downstream around Tier 1 only: the dependency tree's first deep-dives, the schema work, the first build target. Tier 2/3 items only get worked when they block a Tier-1 decision.
+5. **Hold the line afterward.** When new ideas arrive mid-project (they will, constantly), the default routing is a ledger row + a tier assignment — not a scope expansion. Expanding Tier 1 requires the owner saying so explicitly, with eyes open.
+
+The goal: something real, up and running, solving the main problem — as fast as possible. Momentum from a shipped Tier 1 beats a perfect plan for a Tier 3 that never starts.
 
 ## Phase 2 — Scaffold the standard kit
 
@@ -105,4 +117,4 @@ Scaffolding is not the finish line — a user who doesn't know what to do next w
 1. **Explain what just got built and why** — each file/folder in one sentence, framed by the problem it prevents ("DECISIONS.md is the logbook so no decision ever gets lost or silently contradicted").
 2. **Explain the toolkit** — each available skill, what it does, and *when to reach for it*: **Grill Me** when an idea needs to be pulled out of their head and stress-tested; **flow-map** when they want to SEE the system; **battery** at milestones when the design needs attacking by fresh eyes; this skill again for the next project.
 3. **Walk the session loop they'll live in:** session start (git status + PENDING check) → brainstorm/grill with checkpoints + gap-scans → ledger rows same-action → promotion sweeps into the spec → checkers at session end → commit (+push) → wrap-up curation question. Remind them: the system is built so that forgetting is safe — every rule has a checker or a same-action duty.
-4. **Name the next concrete action and push toward it.** Don't end with "good luck" — end with "the next thing we do is X; want to start now?" (Usually: the first deep-dive Grill Me on the biggest unresolved design question from the interview, which the dependency tree should already show on top.)
+4. **Name the next concrete action and push toward it.** Don't end with "good luck" — end with "the next thing we do is X; want to start now?" (Usually: the first deep-dive Grill Me on the biggest unresolved **Tier-1** design question — the dependency tree should already show it on top, and it's always an MVP item, never a Tier-2/3 one.)
