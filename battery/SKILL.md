@@ -35,6 +35,9 @@ Synthesis without transcripts is untraceable. In the project's `audit/` folder:
 4. **Update the registry** (lens rows + dates) in the same action.
 5. **Route findings:** every judgment-queue item becomes a row in the project's decision ledger (`DECISIONS.md`) in the same action — a finding without a ledger row is a finding that will be forgotten.
 
+## The self-resolution boundary (anti-drift — non-negotiable)
+When acting on findings, you may self-resolve ONLY (a) **documentation hygiene** (fix stale text to match decisions the owner ALREADY made, add cross-refs, fill a flagged missing default, route a finding to the work item that owns it) and (b) **capture** new findings as undecided/open ledger rows. You may NEVER, without the owner: change a locked/promoted decision, promote anything into the spec, or resolve a design/strategy/positioning question. Anything you resolve on the owner's behalf is stamped as YOUR recommendation and left open, never silently locked. Every batch of self-resolutions ends with a plain-language, reviewable summary (what changed · why · how to revert). The failure mode this prevents: the owner's mental model drifting out of sync with the system because an agent quietly overhauled it.
+
 ## Step 4 — Report to the owner
 
 Lead with the verdict scorecard and what's genuinely strong (agreement across lenses matters in both directions). Then the judgment queue: each item = the problem in plain words + the proposed solution + what it costs to ignore. Plain language — assume the owner is not an engineer.
