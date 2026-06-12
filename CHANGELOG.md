@@ -6,6 +6,11 @@ The kit is dogfooded on a live project ("Good Money Dashboard") — most improve
 
 ## 2026-06-12
 
+### Added
+- **Update safety (`UPDATING.md`) + a no-restart guard.** A new guide explains that updating skills never touches your project (they live in separate places), and `project-init` now has an idempotency guard (Phase −1): run it on an already-set-up project and it switches to continue-mode instead of restarting you. Your North Star and communication level persist in your project's CLAUDE.md so an update can't erase them or reintroduce jargon. Includes a maintainer checklist to run before every push. *Born from the concern that pushing updates could restart a user mid-project or lose their plain-language setting.*
+- **project-init: UI-build-workflow question.** The interview now explicitly settles HOW the UI gets built — Claude Code building frontend+backend together vs a separate design tool building it in parallel (with the snapshot drop zone + conformance rule) — with plain-language pros/cons. *Born from a real project leaving this unsettled and drifting.*
+- **flow-map: Claude bridge always shown.** Any Claude-powered system now renders a "Claude bridge" placeholder category between storage and the engines from the start (marked planned), updated as the bridge gets defined — so the connection layer is never invisible just because it isn't specced yet.
+
 ### Fixed
 - **flow-map: self-contained template (`template.html`).** The skill used to say "copy the Good Money Dashboard's map as the template" — but that file only exists on the author's machine, so other users' AIs improvised a plain grid-of-cards instead of the rich shape-coded, curved-wire, pan/zoom canvas. The full interactive engine now ships INSIDE the skill folder as `template.html`; the skill instructs copy-and-populate and explicitly forbids downgrading to a card grid. *Born from a real user getting the degraded version after her first grill.*
 - **project-init: the system-flow-map now auto-generates** (both `.md` and the rich `.html` from the bundled template) the moment a first spec + ledger exist — it was being skipped and left for an on-request ask.

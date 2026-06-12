@@ -126,14 +126,17 @@
   <!-- ███ EXAMPLE CONTENT — replace all of this with the project's real panels + nodes ███ -->
   <div class="panel" id="srcpanel" style="left:24px; top:80px; width:300px; height:300px;"><h3>Sources <small>· where data comes from</small></h3></div>
   <div class="panel" id="storepanel" style="left:540px; top:80px; width:320px; height:300px;"><h3>Storage</h3></div>
-  <div class="panel" id="engpanel" style="left:1080px; top:80px; width:280px; height:300px;"><h3>Engines</h3></div>
-  <div class="panel" id="uipanel" style="left:1580px; top:80px; width:260px; height:300px;"><h3>Screens</h3></div>
+  <div class="panel" id="bridgepanel" style="left:1080px; top:80px; width:170px; height:300px;"><h3>Claude bridge <small>· placeholder</small></h3></div>
+  <div class="panel" id="engpanel" style="left:1350px; top:80px; width:260px; height:300px;"><h3>Engines</h3></div>
+  <div class="panel" id="uipanel" style="left:1800px; top:80px; width:260px; height:300px;"><h3>Screens</h3></div>
 
   <div class="node src"  id="feed"  style="left:44px; top:130px; width:260px;"><b>Example feed</b><small>an external input</small></div>
   <div class="node doc"  id="docin" style="left:44px; top:230px; width:260px;"><b>Example doc</b><small>an uploaded artifact</small></div>
   <div class="node store hub" id="db" style="left:560px; top:150px; width:280px; height:150px;"><b>CORE STORE</b><small>the single source of truth</small></div>
-  <div class="node proc wip" id="engine" style="left:1100px; top:190px; width:240px;"><b>Example engine</b><small>does the thinking</small></div>
-  <div class="node ui todo" id="screen" style="left:1600px; top:190px; width:200px;"><b>Example screen</b><small>what the user sees</small></div>
+  <!-- Claude bridge: ALWAYS shown for Claude-powered systems, even before it's specced. Mark .todo until defined. -->
+  <div class="node gate todo" id="bridge" style="left:1095px; top:150px; width:140px; height:150px; display:flex; flex-direction:column; justify-content:center;"><b>CLAUDE BRIDGE</b><small>every AI call flows here</small></div>
+  <div class="node proc wip" id="engine" style="left:1370px; top:190px; width:230px;"><b>Example engine</b><small>does the thinking</small></div>
+  <div class="node ui todo" id="screen" style="left:1820px; top:190px; width:200px;"><b>Example screen</b><small>what the user sees</small></div>
 </div></div>
 
 <script>
@@ -156,7 +159,8 @@ function draw(){
   /* ███ EXAMPLE WIRES — replace with the project's real edges. Trunk feeds into the hub; spokes fan out. ███ */
   addPath(curve(R('feed'),R('db')),'trunk',['feed','db'],'into the store',430,180);
   addPath(curve(R('docin'),R('db')),'',['docin','db']);
-  addPath(curve(R('db'),R('engine')),'out',['db','engine']);
+  addPath(curve(R('db'),R('bridge')),'out',['db','bridge'],'via Claude',960,180);
+  addPath(curve(R('bridge'),R('engine')),'out',['bridge','engine']);
   addPath(curve(R('engine'),R('screen')),'out',['engine','screen']);
 }
 function highlight(id,on){
@@ -170,7 +174,8 @@ const TIPS={
   feed:['Example feed','Plain-words explanation of what this input is.'],
   docin:['Example doc','What this uploaded artifact is and why it matters.'],
   db:['Core store','The filing cabinet at the heart of the system — everything reads from here.'],
-  engine:['Example engine','What this process does, in plain words.','what gets decided next, and where',['db']],
+  bridge:['Claude bridge','The connection to Claude — every AI feature in the system runs through here. Details (how it talks, sessions, security) get filled in as the project defines them; shown as a placeholder until then.','define the bridge mechanism in its own session'],
+  engine:['Example engine','What this process does, in plain words.','what gets decided next, and where',['bridge']],
   screen:['Example screen','What the user actually sees and does here.','build detail',['engine']]
 };
 /* ███ WHY: audience-relative "why it matters" — write for whoever the PROJECT serves ███ */
@@ -179,6 +184,7 @@ const WHY={ db:'One organized, current picture — the thing the whole tool stan
 const PANELTIPS={
   srcpanel:['Sources','Where the system gets its information.','Decisions rest on real inputs, not guesses.'],
   storepanel:['Storage','The organized memory of the system.','One source of truth every part reads from.'],
+  bridgepanel:['Claude bridge','The connection layer between the app and Claude — every AI feature flows through it.','It is what lets the tool use AI on the user\'s own Claude, with their data; details get defined as the project matures.'],
   engpanel:['Engines','Where data turns into decisions/actions.','This is where the tool earns its keep.'],
   uipanel:['Screens','What the user looks at.','One clear thing to do, revealed as earned.']
 };
