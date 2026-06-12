@@ -95,7 +95,7 @@ With a README stating: nothing in the product may reference paths inside it; shi
 - `check_orphans.py` — finds files referenced nowhere and not convention-covered; flag → ask the owner before registering or removing.
 
 ### 7. `schema/system-flow-map.md` (+ `.html` when there's a pipeline)
-Standard artifact: sources → engines → surfaces, status-colored, built FROM the spec + ledger statuses (never from brainstorm captures), regenerated in the same commit as any spec change.
+Standard artifact: sources → engines → surfaces, status-colored, built FROM the spec + ledger statuses (never from brainstorm captures), regenerated in the same commit as any spec change. **When the first map gets generated** (usually after the first big spec push), auto-open the HTML in their browser and walk them through it in plain language — including the educational hover tooltips on each node (the flow-map skill's first-render reveal). For a non-technical owner, seeing their own system drawn and explained is the moment the architecture stops being abstract.
 
 ### 8. `ui_versions/` (if Q5 said yes)
 PROTECTED drop zone for frontend snapshot zips. Never delete the newest zip; older only with explicit OK. Every new zip gets a conformance skim against the spec's locked sections; each divergence becomes a ledger row. Mid-build incongruence is EXPECTED — noted, not flagged as a problem.

@@ -42,6 +42,7 @@ Status states: `.（default）` = locked/specced (solid cream, orange spine) · 
 
 - **Wheel zoom toward cursor + drag pan + "⟲ fit" button** (transform translate+scale on an absolutely-positioned canvas div).
 - **Hover-tracing:** hovering a node sets `hot` on every path whose member-set contains it and `dim` on the rest; non-neighbor nodes fade. Register membership per path when drawing (`addPath(d, cls, members[])`) — trunks list ALL their feeders so hovering one feed lights the whole river.
+- **Educational node tooltips (for non-technical owners):** every node carries a hover popup that explains in plain words what the thing IS and what it does in this system ("a database — the filing cabinet where your transactions live; the engines below read from it"). A small, consistent visual cue (a tiny ⓘ dot in the node corner) signals that hovering teaches — first-time users don't know hovering does anything until something tells them. Write the popup text at the project owner's knowledge level (if the project was scaffolded by project-init, Phase 0 gauged it).
 - Wires drawn into one absolutely-positioned `<svg>` from DOM offsets (`offsetLeft/Top` walk) after layout; redraw on resize.
 
 ## Reference implementation
@@ -58,6 +59,7 @@ The map is **built from the project's canonical spec** (the PRD / layer-1 doc) *
 2. **Plan coordinates on paper** (in-thinking): assign panel x-ranges with ≥120px corridors; order nodes within panels so flow-neighbors are y-aligned and wires don't cross; place the hub center.
 3. **Build** the HTML; derive wire control points from node positions (avoid magic literals where possible).
 4. **Render & validate loop (mandatory):** open in the browser (`Start-Process <file>` on Windows). Ask the user for a screenshot (or read one they drop) and audit: text clipping · unintended overlaps · arrows crossing foreign panels · ambiguous labels · uneven spacing · unbalanced composition · does the eye flow the designed path? Fix and re-render. Typically 2–3 iterations — expect the user's eye to be the final judge.
+4b. **First-render reveal (mandatory on a project's FIRST map):** auto-open the HTML for the user and give a guided plain-language tour — what the map shows, how to read it (left = where data comes from, right = what the user sees; shapes mean things; colors = build status), and point out the hover behaviors (tracing + the ⓘ tooltips). Calibrate depth to the owner's knowledge level — for a newcomer this is a teaching moment about their own system, not a render check.
 5. **Checkpoint before big rewrites:** commit + git tag (`flow-map-vN-checkpoint`) so any version is one command away from restoration.
 
 ## What NOT to do
