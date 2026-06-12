@@ -12,6 +12,22 @@ A **battery** is a set of independent fresh-eyes agents attacking a project's sp
 - **Full battery** (milestones, pre-build gate, pre-ship gate): 4–6 agents, each a different lens, plus a synthesis.
 - **Mini battery** (validating one specific scenario or fix): ~3 agents on that single question — cheap, fast, no new lenses required.
 
+## The self-improving loop (batteries get better every run — propose-and-confirm)
+
+Batteries are not static — they learn. The fuel is the **scoreboard**: in the experiment registry, every run records a performance row per lens — **raw found · confirmed-real (survived adversarial verification — the number that matters) · false-alarm rate · top severity · one-line verdict.** A lens that finds nothing on a clean spec is NOT bad (clean bill of health); "good" = *when real problems exist, it catches them with low noise*, judged over many runs.
+
+That data drives four moves, **all governed by the COMMANDER'S INTENT** (the project's / kit's stated end-state) — every proposed change is judged "does this serve the intent?"; if not, drop it:
+1. **SELECT (exploit):** weight lens choice by track record — run the proven high-yield lenses.
+2. **EVOLVE (mutate):** sharpen a high-yield lens into a variant (e.g. split "security" into injection/exfil/supply-chain); variants compete on yield, keep the winner. May include a **token-bounded, cached deep-research step** to enrich a lens with current failure modes/attack patterns — capped so it never burns budget.
+3. **GENERATE:** when findings cluster on a theme across runs, spin up a specialized lens for it.
+4. **★ EXPLORE (non-negotiable):** ALWAYS reserve a slot for a brand-new lens never tried. Without it the system overfits to yesterday's problems and goes blind to new failure modes — the one thing a battery exists to catch. Exploit the best, but always explore.
+
+**Propose-and-confirm, never self-rewriting:** the AI proposes the selection/variant/new-lens and its rationale; the human approves; then it's recorded. (Cross-project communal "master index" of batteries = deliberately HELD — privacy + malicious-contribution security; its own design pass.)
+
+## The lessons log (the reactive half — learn from problems that got through)
+
+Batteries hunt for problems proactively; the **lessons log** learns from problems that surface in REAL USE (a user drifts, a generated artifact is wrong, an update could break work). Keep `LESSONS.md` (or a section): each entry = what missed · the real context · the fix. On confirm, the fix is written into the relevant skill/spec + a "born from real X" changelog note. **The intelligence is in the clusters:** when several lessons share a root cause, abstract a PRINCIPLE that kills the whole FAMILY — don't just patch instances. Every lesson and fix is judged against the commander's intent. (One project's miss → fix the SHARED method → every future project inherits it.)
+
 ## Step 1 — Consult the experiment registry
 
 Open (or create) `audit/experiment-registry.md` — a table of every test type ever run: lens · what it checks · last run date · report file. Rules:

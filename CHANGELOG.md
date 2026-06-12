@@ -6,6 +6,9 @@ The kit is dogfooded on a live product build — most improvements are battle-te
 
 ## 2026-06-12
 
+### Added
+- **Commander's Intent + the self-improving loop.** The kit now states its Commander's Intent (a fast, clean, buildable spec with minimal user friction) as the fitness test every decision and improvement is judged against. The battery skill gains a self-improving loop — score each lens's real yield, SELECT the proven ones, EVOLVE high-yield lenses (optional token-bounded deep-research), GENERATE specialized lenses for recurring problems, and ALWAYS reserve an explore slot for a new lens — all propose-and-confirm. Plus `LESSONS.md`, the reactive half: real-world misses get logged, clustered, and abstracted into principles that kill whole families of problems (seeded with this session's lessons). Cross-project communal index deliberately held (privacy + malicious-contribution security).
+
 ### Fixed
 - **flow-map: the build-status board was missing from the template.** Maps generated for other projects had no bottom Build-sequence / Build-status sections (a real user's map shipped without them) because they weren't extracted into `template.html`. Both sections + their styling are now in the template, and the skill marks them required.
 
