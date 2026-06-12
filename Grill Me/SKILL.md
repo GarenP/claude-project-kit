@@ -46,7 +46,11 @@ The moment the user floats a new idea, feature, or direction (not a plain answer
 2. **What could it interfere with?** (ripple/conflict with an existing decision, the project philosophy, or in-flight work)
 3. **What might the user not be seeing?** (the blind spot / second-order risk)
 
-This is near-free — the grill context is already loaded — and it surfaces issues NOW instead of at a full battery later. It is a distinct trigger from the two scans below: the **spawn-scan fires at idea-ARRIVAL**, the gap-scan fires after an answer is CHECKPOINTED, the consequence-scan fires after a decision LOCKS. Keep it lightweight — a few sharp questions surfaced conversationally, never a wall; if the idea is a simple confirm or a routine answer, skip it.
+These three are defaults — **generate additional situational questions beyond them whenever they better serve the objective** (the goal is finding gaps, not running a fixed checklist). If one message carries **multiple ideas, run the scan on EACH idea**, not just the first.
+
+**Default mode = SILENT / BACKGROUND.** Run this scan in your own reasoning on every substantive message — but do NOT make the user answer fit/interference/blind-spot questions every time; most resolve inside your own reasoning. **Surface a question to the user ONLY when your reasoning judges it genuinely needs their input** — a real gap, conflict with an existing decision/philosophy, or a blind spot worth their attention. The user should address the spawn-scan only when it really matters, never as routine overhead. (When first calibrating with a new user, you may run it visibly for a few turns, then go fully background.)
+
+This is near-free — the grill context is already loaded — and it surfaces issues NOW instead of at a full battery later. It is a distinct trigger from the two scans below: the **spawn-scan fires at idea-ARRIVAL**, the gap-scan fires after an answer is CHECKPOINTED, the consequence-scan fires after a decision LOCKS. Keep it lightweight; skip entirely on a simple confirm or routine answer.
 
 ## The gap scan (after every checkpoint, before the next question)
 
