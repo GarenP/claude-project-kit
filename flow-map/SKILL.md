@@ -58,7 +58,7 @@ Status states: `.（default）` = locked/specced (solid cream, orange spine) · 
 
 **❌ Failure mode to avoid (real, observed):** producing a plain CSS-grid of cards connected by text "→" arrows instead of the shape-coded, curved-wire, pan/zoom canvas. A grid of cards is NOT this artifact. The shapes carry meaning, the wires show flow you can trace, and the map pans/zooms — if those are missing, it's wrong. The bundled `template.html` already has all of it; start there, never from a blank file or from the markdown description alone.
 
-*(The Good Money Dashboard's `schema/system-flow-map.html` is the fully-populated real-world example the template was extracted from — but the template is self-contained, so you never need access to that file.)*
+*(The bundled `template.html` was extracted from a fully-populated real-world map — but it's self-contained, so you never need any external file; just copy and populate it.)*
 
 ## Source of truth + regeneration cadence (standing rule)
 

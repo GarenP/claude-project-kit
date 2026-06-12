@@ -2,11 +2,15 @@
 
 All notable changes to the four skills (project-init · Grill Me · flow-map · battery). Newest first. Dates are when the change shipped to this repo.
 
-The kit is dogfooded on a live project ("Good Money Dashboard") — most improvements are battle-tested fixes from real sessions, noted as such.
+The kit is dogfooded on a live product build — most improvements are battle-tested fixes from real sessions, noted as such.
 
 ## 2026-06-12
 
 ### Added
+- **SPEC-FIRST, CODE-LAST is now an explicit hard rule** (was only implied). Stated at the top of the skill and in the scaffolded project's process rules: no implementation code until the spec is fully fleshed out through grill deep-dives + a pre-build battery; a Design Grill never writes product code; Claude confirms the plan before big steps. *Born from a real project's AI starting to say it might write code after a grilling session — the user had to correct it.*
+- **Baseline-interview checklist + update-backfill.** project-init scaffolds an `interview-checklist.md` of every baseline question; the no-restart guard compares it against the skill's current question set and asks anything unanswered OR newly-added-since — so when a kit update adds a question, in-progress projects get it backfilled instead of silently missing it. *Born from realizing a user mid-grilling would never be asked the newly-added UI-workflow question after updating.*
+- **flow-map: the NEXT-UP "sheen" is now in the bundled template.** The flowing-gradient ring (panels) / pulsing color-shift glow + "★ NEXT UP" chip (nodes) that marks the next thing to build now ships in `template.html`, so every project's map gets it — not just the original.
+- **Scrubbed the dogfood product's name** from the public kit (it's an unreleased product); references are now neutral.
 - **Update safety (`UPDATING.md`) + a no-restart guard.** A new guide explains that updating skills never touches your project (they live in separate places), and `project-init` now has an idempotency guard (Phase −1): run it on an already-set-up project and it switches to continue-mode instead of restarting you. Your North Star and communication level persist in your project's CLAUDE.md so an update can't erase them or reintroduce jargon. Includes a maintainer checklist to run before every push. *Born from the concern that pushing updates could restart a user mid-project or lose their plain-language setting.*
 - **project-init: UI-build-workflow question.** The interview now explicitly settles HOW the UI gets built — Claude Code building frontend+backend together vs a separate design tool building it in parallel (with the snapshot drop zone + conformance rule) — with plain-language pros/cons. *Born from a real project leaving this unsettled and drifting.*
 - **flow-map: Claude bridge always shown.** Any Claude-powered system now renders a "Claude bridge" placeholder category between storage and the engines from the start (marked planned), updated as the bridge gets defined — so the connection layer is never invisible just because it isn't specced yet.

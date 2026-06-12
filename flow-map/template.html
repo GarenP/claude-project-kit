@@ -94,6 +94,19 @@
   .node.blk{box-shadow:0 0 0 3px var(--blocked), 0 6px 20px rgba(0,0,0,.55)!important; opacity:1!important;}
   .node.blk.dim{opacity:1!important;}
 
+  /* ★ NEXT-UP treatment — the "sheen" that marks the next thing to build. Move the .next class
+     (and the nextchip span) to whatever node/panel is the top of the docket. PANEL = flowing gradient
+     ring; NODE = pulsing color-shift glow. Both pseudo-safe. */
+  @property --ang{syntax:'<angle>'; initial-value:0deg; inherits:false;}
+  @keyframes flow{to{--ang:360deg;}}
+  .panel.next{border-color:rgba(216,162,58,.6);}
+  .panel.next::before{content:''; position:absolute; inset:0; border-radius:14px; z-index:-1;
+    background:conic-gradient(from var(--ang), rgba(216,162,58,.5), rgba(243,217,168,.35), rgba(156,196,255,.45), rgba(217,138,63,.4), rgba(216,162,58,.5));
+    animation:flow 5s linear infinite; filter:blur(12px);}
+  .node.next{animation:nextglow 1.9s ease-in-out infinite; z-index:3;}
+  @keyframes nextglow{0%,100%{box-shadow:0 0 0 2px var(--amber), 0 0 16px 2px rgba(216,162,58,.55);}50%{box-shadow:0 0 0 3px var(--accent), 0 0 26px 6px rgba(88,166,255,.6);}}
+  .nextchip{position:absolute; top:-14px; left:50%; transform:translateX(-50%); z-index:7; background:linear-gradient(90deg,var(--amber),var(--accent)); color:#10151f; font-size:10.5px; font-weight:800; letter-spacing:.12em; padding:3px 11px; border-radius:11px; white-space:nowrap; box-shadow:0 3px 12px rgba(0,0,0,.6); animation:chippulse 1.6s ease-in-out infinite;}
+  @keyframes chippulse{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.07)}}
   #tip{position:absolute; display:none; max-width:320px; background:var(--bg); color:#f2e7d4; border:1px solid var(--accent); border-radius:10px; padding:11px 14px; font-size:13.5px; line-height:1.5; z-index:50; box-shadow:0 8px 26px rgba(0,0,0,.65); pointer-events:none;}
   #tip b{color:var(--accent-soft); display:block; margin-bottom:3px; font-size:12.5px; letter-spacing:.08em; text-transform:uppercase;}
   #tip .nx{display:block; margin-top:7px; padding-top:6px; border-top:1px solid rgba(91,140,255,.35); color:#ecc274; font-size:12.5px;}
@@ -135,7 +148,8 @@
   <div class="node store hub" id="db" style="left:560px; top:150px; width:280px; height:150px;"><b>CORE STORE</b><small>the single source of truth</small></div>
   <!-- Claude bridge: ALWAYS shown for Claude-powered systems, even before it's specced. Mark .todo until defined. -->
   <div class="node gate todo" id="bridge" style="left:1095px; top:150px; width:140px; height:150px; display:flex; flex-direction:column; justify-content:center;"><b>CLAUDE BRIDGE</b><small>every AI call flows here</small></div>
-  <div class="node proc wip" id="engine" style="left:1370px; top:190px; width:230px;"><b>Example engine</b><small>does the thinking</small></div>
+  <!-- ★ This node carries the NEXT-UP treatment (sheen + chip) = the next thing to build. Move .next + the chip to the project's actual top-of-docket item. -->
+  <div class="node proc wip next" id="engine" style="left:1370px; top:190px; width:230px;"><span class="nextchip">★ NEXT UP</span><b>Example engine</b><small>does the thinking</small></div>
   <div class="node ui todo" id="screen" style="left:1820px; top:190px; width:200px;"><b>Example screen</b><small>what the user sees</small></div>
 </div></div>
 
