@@ -24,6 +24,7 @@ Build self-contained HTML diagrams (no build step; only Google-Fonts CDN optiona
 8. **Container discipline.** Group membership = containment in a titled panel, never position-guessing. But don't box labels — wire labels and zone subtitles are free-floating text.
 9. **Same-column (vertical) edges bow sideways** through the corridor to clear intermediate nodes; long cross-board edges sag through the empty corridor *below* the panels rather than crossing them.
 10. **Canonical category set for data systems** (adapt as needed): Sources (split by lane if validation differs) · Validation/Ingestion · **Storage (its own category — all stores/cylinders live here)** · Engines/Processing · Outputs/Screens. A gatekeeper (access/unlock controller) renders as a bar ABOVE the column it governs, dotted drop labeled "gates …".
+11. **Home vs workplace (cross-cutting modules):** when a module LIVES in one layer but OPERATES on another flow (a bridge sub-module guarding the inbound lanes; shared infrastructure serving two directions), draw BOTH: the node sits in its home column (where it gets built), and a **dotted duty wire** runs to where it actually works, labeled with the duty ("inspects all 3rd-party text first"). A node whose label implies a position its wires don't show is a map error — the reader will reasonably ask "shouldn't this be over there?", and the answer must already be drawn. One shared layer serving multiple duties is ONE column with duty wires — never duplicated into two phantom layers.
 
 ## Shape semantics (CSS classes in the template)
 
