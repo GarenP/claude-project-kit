@@ -39,6 +39,15 @@ If the project has a `DECISIONS.md` ledger (e.g. `brainstorms/DECISIONS.md` — 
 - Each row: ID, status (PENDING / PROMOTED / SUPERSEDED / DISCUSS / QUEUED-GRILL), the decision in one line, refs (capture file + section), and the target doc/section it must be promoted into.
 - **Conflict check:** if the new decision contradicts a PROMOTED entry, flag it to the user conversationally before recording. If they confirm, mark the old row `SUPERSEDED → D-0xx`; its target column is now the checklist of dead text to remove from the docs.
 
+## The spawn-scan (when a NEW idea arrives — before developing it)
+
+The moment the user floats a new idea, feature, or direction (not a plain answer to your question), fire **2–3 quick system-aware curiosity questions BEFORE you invest in developing it** — a frontline mini-battery that catches integration gaps at the cheapest possible moment: idea-arrival, before any sunk cost. The three default lenses:
+1. **How would this work in the current system?** (fit / mechanics)
+2. **What could it interfere with?** (ripple/conflict with an existing decision, the project philosophy, or in-flight work)
+3. **What might the user not be seeing?** (the blind spot / second-order risk)
+
+This is near-free — the grill context is already loaded — and it surfaces issues NOW instead of at a full battery later. It is a distinct trigger from the two scans below: the **spawn-scan fires at idea-ARRIVAL**, the gap-scan fires after an answer is CHECKPOINTED, the consequence-scan fires after a decision LOCKS. Keep it lightweight — a few sharp questions surfaced conversationally, never a wall; if the idea is a simple confirm or a routine answer, skip it.
+
 ## The gap scan (after every checkpoint, before the next question)
 
 Scan what you just captured — **the user should never be the one to spot these**:
