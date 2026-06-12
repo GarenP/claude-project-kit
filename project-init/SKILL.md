@@ -103,7 +103,10 @@ PROTECTED drop zone for frontend snapshot zips. Never delete the newest zip; old
 ### 9. `git init` + first commit
 Commit the scaffold as the first coherent unit. If the user wants off-machine backup, create private remote(s) — quarantined raw data gets its own private repo, never the public one.
 
-## Companion skills (the kit travels as a set of three)
+## Changelog discipline (when this kit itself is the project)
+When working ON the kit's own skills (improving project-init / Grill Me / flow-map / battery), every shipped change gets a `CHANGELOG.md` entry in the same commit — what changed, and (where it applies) the real bug or session that prompted it. The changelog is user-facing: people pulling updates read it to know what's new and what got fixed. "Born from a real X" notes are valuable — they show the kit is battle-tested, not theorized. Keep newest-first; group by date; Added / Changed / Fixed.
+
+## Companion skills (the kit travels as a set of four)
 
 This skill scaffolds the *structure*; two companion skills run the *sessions* inside it. When sharing this kit with someone, send all three folders for `~/.claude/skills/`:
 - **`Grill Me`** — runs the brainstorm/interview sessions with checkpointing, gap-scans, and parked-thread maintenance. The init interview above uses its method.
