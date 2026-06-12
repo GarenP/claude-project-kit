@@ -120,6 +120,22 @@
   #drawer .waits{color:#e89a8a; font-weight:700;}
   #drx{position:absolute; top:16px; right:16px; background:none; border:1px solid #44506a; color:var(--cream); border-radius:8px; width:31px; height:31px; cursor:pointer;}
   #drx:hover{background:var(--accent); color:var(--ink);}
+  /* Bottom-of-page sections: build-status table + the build/roadmap sequence strip. Keep these — they
+     turn the map into a status board, not just a diagram. Populate the rows from the project's ledger. */
+  section{margin:8px 34px 30px;}
+  section h2{font-weight:700; font-size:19px; border-bottom:1px solid rgba(91,140,255,.4); padding-bottom:6px;}
+  .stair{display:flex; align-items:stretch; overflow-x:auto; padding:10px 2px;}
+  .step{background:var(--cream); color:var(--ink); border-radius:9px; padding:10px 14px; min-width:160px; font-size:12.5px; line-height:1.4; box-shadow:0 3px 14px rgba(0,0,0,.35), inset 0 3px 0 var(--built);}
+  .step b{font-size:13px} .step small{color:var(--ink-soft); display:block; margin-top:3px;}
+  .step.wip{background:#f2e3b8; box-shadow:0 3px 14px rgba(0,0,0,.35), inset 0 3px 0 var(--amber);}
+  .step.todo{background:rgba(238,241,246,.10); color:#c9bba6; box-shadow:inset 0 3px 0 var(--ghost);}
+  .arrow{align-self:center; color:var(--accent); font-size:22px; padding:0 9px;}
+  table{border-collapse:collapse; width:100%; font-size:13px; background:rgba(238,241,246,.04); border-radius:10px; overflow:hidden;}
+  th{background:var(--panel); color:var(--cream); letter-spacing:.06em; font-weight:600;}
+  th,td{border:1px solid rgba(120,130,150,.3); padding:6px 12px; text-align:left; color:#dde3ec;}
+  tr.done td:first-child{box-shadow:inset 3px 0 0 var(--built);}
+  tr.wip td{color:#e3c98f} tr.wip td:first-child{box-shadow:inset 3px 0 0 var(--amber);}
+  tr.todo td{color:#9c8d79} tr.todo td:first-child{box-shadow:inset 3px 0 0 var(--ghost);}
 </style>
 </head>
 <body>
@@ -152,6 +168,28 @@
   <div class="node proc wip next" id="engine" style="left:1370px; top:190px; width:230px;"><span class="nextchip">★ NEXT UP</span><b>Example engine</b><small>does the thinking</small></div>
   <div class="node ui todo" id="screen" style="left:1820px; top:190px; width:200px;"><b>Example screen</b><small>what the user sees</small></div>
 </div></div>
+
+<!-- ███ BUILD STATUS + SEQUENCE — keep these bottom sections; populate rows from the project's ledger.
+     They make the map a status board (what's done / in design / planned), not just a picture. ███ -->
+<section>
+<h2>Build sequence</h2>
+<div class="stair">
+  <div class="step"><b>Step 1</b><small>first thing built</small></div><span class="arrow">→</span>
+  <div class="step wip"><b>Step 2</b><small>in design</small></div><span class="arrow">→</span>
+  <div class="step todo"><b>Step 3</b><small>planned</small></div>
+</div>
+</section>
+
+<section>
+<h2>Build status</h2>
+<table>
+<tr><th>Component</th><th>Status</th><th>Where</th></tr>
+<tr class="done"><td>Example feed / store</td><td>specced</td><td>SPEC §x</td></tr>
+<tr class="wip"><td>Example engine</td><td>in design — NEXT</td><td>next grill</td></tr>
+<tr class="todo"><td>Claude bridge</td><td>placeholder</td><td>its own session</td></tr>
+<tr class="todo"><td>Example screen</td><td>planned</td><td>roadmap</td></tr>
+</table>
+</section>
 
 <script>
 const canvas=document.getElementById('canvas'), svg=document.getElementById('wires');

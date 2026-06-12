@@ -6,6 +6,9 @@ The kit is dogfooded on a live product build — most improvements are battle-te
 
 ## 2026-06-12
 
+### Fixed
+- **flow-map: the build-status board was missing from the template.** Maps generated for other projects had no bottom Build-sequence / Build-status sections (a real user's map shipped without them) because they weren't extracted into `template.html`. Both sections + their styling are now in the template, and the skill marks them required.
+
 ### Added
 - **SPEC-FIRST, CODE-LAST is now an explicit hard rule** (was only implied). Stated at the top of the skill and in the scaffolded project's process rules: no implementation code until the spec is fully fleshed out through grill deep-dives + a pre-build battery; a Design Grill never writes product code; Claude confirms the plan before big steps. *Born from a real project's AI starting to say it might write code after a grilling session — the user had to correct it.*
 - **Baseline-interview checklist + update-backfill.** project-init scaffolds an `interview-checklist.md` of every baseline question; the no-restart guard compares it against the skill's current question set and asks anything unanswered OR newly-added-since — so when a kit update adds a question, in-progress projects get it backfilled instead of silently missing it. *Born from realizing a user mid-grilling would never be asked the newly-added UI-workflow question after updating.*
