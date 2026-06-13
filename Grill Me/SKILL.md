@@ -33,6 +33,8 @@ After EVERY user answer, BEFORE you ask the next question:
 
 Never batch multiple answers into one write. Checkpoint one answer at a time. The point is that if context is lost at any moment, the file already holds everything said so far.
 
+**Write-then-speak rule (non-negotiable):** the Edit/Write that checkpoints an answer must be ISSUED and its success result IN HAND *before* any prose in the same turn says "logged," "captured," "done," or equivalent. Make the tool call FIRST → confirm it returned without error → THEN reference it in prose. Never write "Logged X" and *then* make the call; if the call isn't in this turn's execution, the prose must not claim it is. Claiming a write that didn't happen is the only invisible failure mode — "said done" is never evidence of "actually done," because prose returns no feedback and the next turn reads its own claim as proof. Verification over vigilance: the call precedes the claim, structurally. *(Born from a real session where a checkpoint was narrated as "logged" but the Edit was never made — caught a turn later when a dependent edit's anchor failed.)*
+
 ## The decision ledger (runs alongside the Q&A log)
 
 If the project has a `DECISIONS.md` ledger (e.g. `brainstorms/DECISIONS.md` — create one if the project does grills regularly), then **the moment an answer settles a decision**, add it to the ledger as a `PENDING` row in the same action as the checkpoint write:
