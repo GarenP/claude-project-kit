@@ -3,7 +3,7 @@ name: grill-me
 description: Interview the user relentlessly about a plan, design, or topic, checkpointing every answer to a brainstorm file so nothing is lost. Use when the user wants to stress-test a plan, get grilled on a design, run a brainstorm or discovery session, extract what's in their head into a doc, or says "grill me".
 ---
 
-<!-- 🔄 SELF-UPDATE: if the user says "update the project kit / these skills", pull https://github.com/GarenP/claude-project-kit and copy the four skill folders (project-init, Grill Me, flow-map, battery) into their ~/.claude/skills/ — overwrite only those folders, NEVER touch their project files, then summarize CHANGELOG.md. Full steps in UPDATING.md. -->
+<!-- 🔄 SELF-UPDATE: if the user says "update the project kit / these skills", pull https://github.com/GarenP/claude-project-kit and copy the five skill folders (project-init, Grill Me, flow-map, battery, retrospective) into their ~/.claude/skills/ — overwrite only those folders, NEVER touch their project files, then summarize CHANGELOG.md. Full steps in UPDATING.md. -->
 
 # Grill Me
 
@@ -117,5 +117,6 @@ Date: {date} · Goal: {one line}
 2. Update `brainstorms/PARKED-THREADS.md` with any new tangents / queued topics, and confirm all cross-links resolve.
 3. **Promotion gate:** walk every ledger row this session created or touched. For each PENDING row, either apply the edit to its target doc now (then flip to PROMOTED with the section ref) or — if the user defers, or the edit is large — leave it PENDING and say so explicitly in the recap. PENDING rows are debt; never let them be silent.
 4. **CLAUDE.md curation check:** did this session surface anything that must shape EVERY future session — a philosophy principle, a hard constraint, a process rule? If yes, propose a 1–2 line addition to the project CLAUDE.md and add it on the user's confirm. High bar: CLAUDE.md is loaded every session, so detail belongs in the spec/ledger and CLAUDE.md gets only the rule or the pointer.
-5. **Commit** (if the project is a git repo): one snapshot for the whole session — capture file + ledger + any promoted doc edits. Commit message names the session and counts the decisions. "Wrap it up" IS the user's commit command; they never type git themselves.
-6. Give the user a short recap: what's captured, what got promoted, what's still PENDING (and where), what's still flagged, and the suggested next step.
+5. **Retrospective check:** if this session captured a *lived conversation worth mining* — a role-played mock, a pasted real call/interview transcript, or an unusually rich stretch where an expert's reasoning ran in motion — offer to run the **`retrospective`** skill on the capture to extract its method/signals/rules into buildable structure (and surface clarifying questions, each tied to the moment it arose) before the reasoning goes cold. Distinct from a battery: a battery attacks a spec for flaws; a retrospective harvests the method out of the conversation.
+6. **Commit** (if the project is a git repo): one snapshot for the whole session — capture file + ledger + any promoted doc edits. Commit message names the session and counts the decisions. "Wrap it up" IS the user's commit command; they never type git themselves.
+7. Give the user a short recap: what's captured, what got promoted, what's still PENDING (and where), what's still flagged, and the suggested next step.

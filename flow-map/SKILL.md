@@ -3,7 +3,7 @@ name: flow-map
 description: Build or update an interactive HTML system flow map (data pipeline / backend architecture diagram) with pan/zoom, hover-tracing, and status colors. Use when the user asks for a system flow map, pipeline visualization, architecture diagram, data-flow chart, or to update an existing system-flow-map.html. Standard artifact for every project (auto-updated at promotion sweeps).
 ---
 
-<!-- 🔄 SELF-UPDATE: if the user says "update the project kit / these skills", pull https://github.com/GarenP/claude-project-kit and copy the four skill folders (project-init, Grill Me, flow-map, battery) into their ~/.claude/skills/ — overwrite only those folders, NEVER touch their project files, then summarize CHANGELOG.md. Full steps in UPDATING.md. -->
+<!-- 🔄 SELF-UPDATE: if the user says "update the project kit / these skills", pull https://github.com/GarenP/claude-project-kit and copy the five skill folders (project-init, Grill Me, flow-map, battery, retrospective) into their ~/.claude/skills/ — overwrite only those folders, NEVER touch their project files, then summarize CHANGELOG.md. Full steps in UPDATING.md. -->
 
 # Flow Map — interactive system/pipeline diagrams as a single HTML file
 

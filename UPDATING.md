@@ -8,7 +8,7 @@ Claude knows the source and does it for you. **Canonical source: `https://github
 
 **The exact procedure Claude follows when you ask to update (Claude: do this):**
 1. Clone the repo fresh to a temp folder (`git clone https://github.com/GarenP/claude-project-kit`), or `git pull` if a local clone already exists.
-2. Copy the four skill folders — `project-init`, `Grill Me`, `flow-map`, `battery` — into the user's skills directory (`~/.claude/skills/` on Mac/Linux, `C:\Users\<user>\.claude\skills\` on Windows), overwriting ONLY those four folders.
+2. Copy the five skill folders — `project-init`, `Grill Me`, `flow-map`, `battery`, `retrospective` — into the user's skills directory (`~/.claude/skills/` on Mac/Linux, `C:\Users\<user>\.claude\skills\` on Windows), overwriting ONLY those five folders.
 3. Confirm what changed (read the new `CHANGELOG.md` and summarize it for the user).
 4. **NEVER touch the user's project files.** Skills update; projects don't. Then they keep working — an already-set-up project continues where it left off and backfills any newly-added interview questions (see the no-restart guard).
 
@@ -25,7 +25,7 @@ So a kit update changes the *method* the AI uses — never your accumulated work
 
 ## How to update (safe, 30 seconds)
 1. Download the latest kit (this repo: green **Code** → Download ZIP, or `git pull` if you cloned it).
-2. Replace the four skill folders in your skills directory with the new ones: `project-init`, `Grill Me`, `flow-map`, `battery`. (Overwrite the old folders — that's the whole update.)
+2. Replace the five skill folders in your skills directory with the new ones: `project-init`, `Grill Me`, `flow-map`, `battery`, `retrospective`. (Overwrite the old folders — that's the whole update.)
 3. Done. Open your project as normal and keep working — the AI picks up where you left off.
 
 ## Built-in protections (so an update can't restart or "dumb down" your project)

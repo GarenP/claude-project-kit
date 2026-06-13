@@ -1,8 +1,13 @@
 # Changelog — Claude Project Kit
 
-All notable changes to the four skills (project-init · Grill Me · flow-map · battery). Newest first. Dates are when the change shipped to this repo.
+All notable changes to the five skills (project-init · Grill Me · flow-map · battery · retrospective). Newest first. Dates are when the change shipped to this repo.
 
 The kit is dogfooded on a live product build — most improvements are battle-tested fixes from real sessions, noted as such.
+
+## 2026-06-13
+
+### Added
+- **New skill: `retrospective` (the kit is now five skills).** The convergent counterpart to `battery`. Where a battery points adversarial fresh-eyes agents at a finished spec to find flaws, a retrospective points analytical agents at a *captured conversation* (a role-played mock, a real call/interview, a rich grill) and EXTRACTS the buildable structure inside it: the repeatable method/stages, the input/signal list, the conversation/technique rules, eval-rubric dimensions, meta-patterns, and — its headline output — clarifying questions, each tied to the exact moment it arose so the owner's memory is refreshed to that point. `project-init` now scaffolds it as the fifth companion, with a "Retrospective duty" process rule (mine lived conversations before the reasoning goes cold) and a Phase-3 toolkit explanation; `Grill Me`'s wrap now offers to run it when a session captured a mock/transcript. *Born from reverse-engineering an expert's live diagnostic method out of role-played intake mocks — the move-by-move notes held the reasoning, but the buildable structure only emerged from a dedicated convergent pass over the whole conversation; attacking the notes (a battery) finds flaws, it doesn't harvest the method inside them.*
 
 ## 2026-06-12
 
