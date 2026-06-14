@@ -6,6 +6,14 @@ The kit is dogfooded on a live product build — most improvements are battle-te
 
 ## 2026-06-14
 
+### Added
+- **Four anti-drift disciplines moved UP into the always-loaded scaffold (they were trapped inside Grill Me).** Root cause from a real build: three disciplines — checkpoint-as-you-go, answer-EVERY-question, auto-log — lived ONLY in the Grill Me skill, so they vanished in any conversation that didn't invoke it. Fix = promote them into the scaffolded project `CLAUDE.md` (loaded every session) and back them with artifacts:
+  - **Answer-and-log discipline** (new `CLAUDE.md` process rule): before replying to ANY message, scan it for EVERY question/request — multi-part messages bury 2nd/3rd asks; answer all or explicitly park; carry unresolved questions in `OPEN-QUESTIONS.md`; auto-log decisions to the ledger same-action, never asking permission.
+  - **Write-then-speak rule** (now a `CLAUDE.md` process rule, not just a Grill Me rule): the Edit/Write that logs a decision must be ISSUED and its success result in hand BEFORE any prose claims "logged/captured/done." Tool call first → confirm → then claim. Fires in every conversation now, not only inside a grill.
+  - **OPEN-QUESTIONS tracker + checker** (new scaffolded artifacts): `OPEN-QUESTIONS-template.md` (a table — # · Question · Asked · Status OPEN/ANSWERED/DEFERRED · Answered-where) and `check_open_questions.py`, which FAILS if any row is still OPEN (DEFERRED rows pass but are listed). Both ship beside the skill; project-init copies them into `brainstorms/OPEN-QUESTIONS.md` and wires the checker into the session-end verification battery. Makes "carry questions forward" a checkable fact instead of a memory.
+  - **Ledger index-format rule** (added to both the `CLAUDE.md` decision-ledger duty and the `DECISIONS.md` scaffold spec): the ledger's top index stays ONE clean human-readable line per decision (`ID | short essence | status`); all granular detail lives in the `### D-0XX` detail block below — an index cell must never bloat into a paragraph.
+  *Born from a real build (Good Money Dashboard) where a question was asked ~3× before being answered, decisions were narrated as logged but never written, and the ledger index drifted into paragraph-sized cells that had to be restructured out.*
+
 ### Fixed
 - **flow-map: zoom was too aggressive on laptop touchpads (rocketed in/out) + added on-screen +/− zoom buttons.** The wheel handler applied a steep fixed `1.13×` step per event; touchpads fire many rapid events, so the map shot to min/max zoom. The factor now scales with `deltaY` and is **clamped per event to ±8%** (`Math.exp(-deltaY*0.0015)`, clamped to `[0.92, 1.08]`), so mouse wheels and touchpads both zoom smoothly. Added **+ / − buttons** (zoom toward center, 25% step) beside "⟲ fit" so trackpad users never need a pinch/scroll gesture. *Born from a real user on a laptop touchpad.*
 
