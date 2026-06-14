@@ -47,7 +47,7 @@ Status states: `.（default）` = locked/specced (solid cream, orange spine) · 
 
 ## Interaction (all hand-rolled, zero libraries)
 
-- **Wheel zoom toward cursor + drag pan + "⟲ fit" button** (transform translate+scale on an absolutely-positioned canvas div).
+- **Wheel zoom toward cursor (clamped per-event so touchpads don't rocket) + on-screen +/− zoom buttons + drag pan + "⟲ fit" button** (transform translate+scale on an absolutely-positioned canvas div).
 - **Hover-tracing:** hovering a node sets `hot` on every path whose member-set contains it and `dim` on the rest; non-neighbor nodes fade. Register membership per path when drawing (`addPath(d, cls, members[])`) — trunks list ALL their feeders so hovering one feed lights the whole river.
 - **Educational node tooltips (for non-technical owners):** every node carries a hover popup that explains in plain words what the thing IS and what it does in this system ("a database — the filing cabinet where your transactions live; the engines below read from it"). A small, consistent visual cue (a tiny ⓘ dot in the node corner) signals that hovering teaches — first-time users don't know hovering does anything until something tells them. Write the popup text at the project owner's knowledge level (if the project was scaffolded by project-init, Phase 0 gauged it).
 - **Status badges:** every node wears a corner badge — green ✓ = specced/locked · amber ◐ = direction set · gray ○ = not designed — with matching legend chips. Color-as-tint alone is not enough; the badge makes build status readable at a glance.

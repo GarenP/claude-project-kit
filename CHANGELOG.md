@@ -4,6 +4,11 @@ All notable changes to the five skills (project-init · Grill Me · flow-map · 
 
 The kit is dogfooded on a live product build — most improvements are battle-tested fixes from real sessions, noted as such.
 
+## 2026-06-14
+
+### Fixed
+- **flow-map: zoom was too aggressive on laptop touchpads (rocketed in/out) + added on-screen +/− zoom buttons.** The wheel handler applied a steep fixed `1.13×` step per event; touchpads fire many rapid events, so the map shot to min/max zoom. The factor now scales with `deltaY` and is **clamped per event to ±8%** (`Math.exp(-deltaY*0.0015)`, clamped to `[0.92, 1.08]`), so mouse wheels and touchpads both zoom smoothly. Added **+ / − buttons** (zoom toward center, 25% step) beside "⟲ fit" so trackpad users never need a pinch/scroll gesture. *Born from a real user on a laptop touchpad.*
+
 ## 2026-06-13
 
 ### Added
