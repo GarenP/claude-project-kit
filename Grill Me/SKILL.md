@@ -7,6 +7,8 @@ description: Interview the user relentlessly about a plan, design, or topic, che
 
 # Grill Me
 
+> **The always-on disciplines** — answer-and-log, write-then-speak, running capture, gap-scan, paste-guard — **live in the project's `CLAUDE.md` and apply in EVERY conversation.** This skill adds a deliberate **INTERVIEW MODE** on top: one question at a time, walking the decision tree, for deep discovery of a topic. Invoke it when you want that structured interview; you do NOT need it for the always-on disciplines (those fire regardless). Where this skill and `CLAUDE.md` share a rule, this skill carries a tight reminder + a pointer (`canonical: project CLAUDE.md`) and keeps the full text only for the parts unique to interview mode — so a project that lacks the CLAUDE.md rule still works from this skill alone.
+
 Relentlessly interview the user about every aspect of the topic until you reach shared understanding. Walk down each branch of the decision tree, resolving dependencies one by one. The real goal is to **extract what's in their head into a durable, organized markdown file** so nothing is lost as context fills up.
 
 ## The capture file is the whole point
@@ -20,9 +22,9 @@ Long interviews fill up context. If you hold answers only in your head, you will
 2. **Create the file immediately** with a header: title, date, the goal of the session, and an empty "Open flags" section.
 3. **Tell the user where you're saving**, in one line. Then ask Q1.
 
-## The paste guard (non-negotiable — lost input is the ONLY unrecoverable failure)
+## The paste guard (canonical: project CLAUDE.md)
 
-If a user message contains a `[Pasted text #N +N lines]` placeholder and the pasted content is not visible to you, **STOP before checkpointing.** Name the dropped paste number(s) and ask for a repaste NOW — the content may still be in the user's clipboard/buffer; minutes later it's gone forever. Never mark a question captured or resolved while it contains a lost paste. If the user can't recover it, log a permanent `LOST-INPUT` flag in the capture's Open-flags section — a grill may not be stamped COMPLETE with an unresolved or un-annotated lost paste. For anything over ~10 lines, suggest the user drop text into a file (e.g. `brainstorms/inbox/`) instead of the chat box — file reads are lossless.
+A `[Pasted text #N]` placeholder whose content didn't arrive = STOP and request a repaste immediately before checkpointing (the only unrecoverable failure); never mark a question captured while it holds a lost paste. **Interview-mode specifics:** an unrecovered paste = a permanent `LOST-INPUT` flag in the capture's Open-flags section, which blocks the grill from being stamped COMPLETE; for anything over ~10 lines, suggest a file drop (e.g. `brainstorms/inbox/`) over the chat box — file reads are lossless.
 
 ## The checkpoint rule (non-negotiable)
 
@@ -33,15 +35,11 @@ After EVERY user answer, BEFORE you ask the next question:
 
 Never batch multiple answers into one write. Checkpoint one answer at a time. The point is that if context is lost at any moment, the file already holds everything said so far.
 
-**Write-then-speak rule (non-negotiable):** the Edit/Write that checkpoints an answer must be ISSUED and its success result IN HAND *before* any prose in the same turn says "logged," "captured," "done," or equivalent. Make the tool call FIRST → confirm it returned without error → THEN reference it in prose. Never write "Logged X" and *then* make the call; if the call isn't in this turn's execution, the prose must not claim it is. Claiming a write that didn't happen is the only invisible failure mode — "said done" is never evidence of "actually done," because prose returns no feedback and the next turn reads its own claim as proof. Verification over vigilance: the call precedes the claim, structurally. *(Born from a real session where a checkpoint was narrated as "logged" but the Edit was never made — caught a turn later when a dependent edit's anchor failed.)*
+**Write-then-speak rule (canonical: project CLAUDE.md):** the Edit/Write that checkpoints an answer must be ISSUED and confirmed BEFORE any prose says "logged/captured/done." Tool call first → confirm → then claim. (Claiming an unmade write is the one invisible failure — prose returns no feedback.)
 
-## The decision ledger (runs alongside the Q&A log)
+## The decision ledger (runs alongside the Q&A log) — canonical: project CLAUDE.md
 
-If the project has a `DECISIONS.md` ledger (e.g. `brainstorms/DECISIONS.md` — create one if the project does grills regularly), then **the moment an answer settles a decision**, add it to the ledger as a `PENDING` row in the same action as the checkpoint write:
-
-- **Idea-centric, never session-centric.** SEARCH the ledger for an existing entry on the same idea FIRST. If one exists, append this session as a new ref to that entry — never create a duplicate row. One idea = one entry = all its refs across every session.
-- Each row: ID, status (PENDING / PROMOTED / SUPERSEDED / DISCUSS / QUEUED-GRILL), the decision in one line, refs (capture file + section), and the target doc/section it must be promoted into.
-- **Conflict check:** if the new decision contradicts a PROMOTED entry, flag it to the user conversationally before recording. If they confirm, mark the old row `SUPERSEDED → D-0xx`; its target column is now the checklist of dead text to remove from the docs.
+The auto-log / idea-centric-search / conflict-check ledger mechanics are always-on (full rule in `CLAUDE.md`). **Interview-mode reminder:** the moment an answer settles a decision, add a `PENDING` row to `brainstorms/DECISIONS.md` **in the same action as the checkpoint write** (search for an existing idea-entry first — append a ref, never duplicate; contradiction of a PROMOTED row → flag the user, then `SUPERSEDED → D-0xx`). If the project has no ledger yet and it runs grills regularly, create one.
 
 ## The spawn-scan (when a NEW idea arrives — before developing it)
 
@@ -56,18 +54,11 @@ These three are defaults — **generate additional situational questions beyond 
 
 This is near-free — the grill context is already loaded — and it surfaces issues NOW instead of at a full battery later. It is a distinct trigger from the two scans below: the **spawn-scan fires at idea-ARRIVAL**, the gap-scan fires after an answer is CHECKPOINTED, the consequence-scan fires after a decision LOCKS. Keep it lightweight; skip entirely on a simple confirm or routine answer.
 
-## The gap scan (after every checkpoint, before the next question)
+## The gap scan + consequence scan (the interview-time application)
 
-Scan what you just captured — **the user should never be the one to spot these**:
+The gap-scan itself is an always-on discipline (full checklist — unbound parameters, contradictions, ledger sync, standing-rule candidates, existing-home, ambiguous referents — **canonical: project CLAUDE.md**). In interview mode you **run it after every checkpoint, before the next question** — *the user should never be the one to spot these* — plus one interview-mode addition: **Missing data** (does acting on this answer need a file/number/owner nobody has supplied? flag it with who can).
 
-- **Unbound parameters:** any quantity, threshold, cadence, or date left vague ("a certain number of rows", "after a while", "some amount")? Never bury it. Name it, **propose a concrete default** from context, and get it confirmed — or explicitly defer it with an owner and a venue ("tune at build", "Grill 4 decides"). **Never label a decision RESOLVED/locked while it contains an unbound parameter** — write "locked except X (proposed: Y, confirm)".
-- **Contradictions:** does the answer conflict with a promoted decision, the project philosophy, or an earlier answer this session? Raise it conversationally NOW, not at wrap-up.
-- **Ledger sync:** did this answer settle anything (or spawn a new idea) without a ledger-row update in the same action? Fix immediately — rows update per-decision, not at promotion sweeps.
-- **Missing data:** does acting on this answer require information nobody has provided (a file, a number, an owner)? Flag it with who can supply it.
-- **Standing-rule scan (human-in-the-loop):** does this input contain something that must shape EVERY future loop — a process correction, a recurring preference, a philosophy-grade principle? Don't trust yourself to "remember" it as a virtue. Name it immediately — "this looks like a standing rule — want it in CLAUDE.md / the skill / memory?" — and on confirm, write it to the durable home in the same action.
-- **Existing-home check:** before proposing any NEW store, structure, file, registry, or section — SEARCH for an existing home that already covers it. Don't invent a parallel thing the project already has.
-- **Ambiguous referent:** if the user's number/date/threshold references an unnamed thing ("the day-3 unlock", "that panel"), ask the open question ("which unlock do you mean?") — never silently bind it to your best guess or offer only a guessed binary.
-- **Consequence scan (on every RESOLVED decision):** the moment an answer locks a decision, enumerate the second-order questions it just spawned — lifecycle rules, edge cases, "what does this imply for X?" — and either grill them immediately as a sub-question (Q2 → Q2b) or queue them explicitly with an owner/venue. The gap-scan items above catch what's wrong in what was SAID; this catches what the new decision makes askable that nobody has said yet. A decision with unexamined consequences is a loose end wearing a RESOLVED stamp.
+- **Consequence scan (interview-unique — on every RESOLVED decision):** the moment an answer locks a decision, enumerate the second-order questions it just spawned — lifecycle rules, edge cases, "what does this imply for X?" — and either grill them immediately as a sub-question (Q2 → Q2b) or queue them explicitly with an owner/venue. The gap-scan catches what's wrong in what was SAID; this catches what the new decision makes askable that nobody has said yet. A decision with unexamined consequences is a loose end wearing a RESOLVED stamp.
 
 ## Long-session care (ADHD-aware)
 
