@@ -61,6 +61,9 @@ Announce to the user at the start: *"Finalize is heavy. I'll checkpoint + commit
 ## After finalize
 Give the user a short recap: what got promoted + where, what's still open, what the human resolved, and the next suggested step. The session's decisions are now durable and congruent across the ledger, the docs, the PRD, and the map.
 
+### Phase 6 — The reductive refocus (the closing question)
+After the recap, pose the single most important question: **"What is the ONE thing most blocking us right now?"** — the biggest roadblock to the project's progress. Answer it honestly as an advisor (name the real constraint, not a comfortable one), then propose the smallest next move that de-risks it. This is the same reductive loop the product runs on the user's business, turned on the project itself — it pulls a creative, idea-rich owner back to the single highest-leverage point instead of widening scope. End on THAT, not on a stop-offer.
+
 ## Boundaries (inherited)
 - The **self-resolution boundary** still holds: never resolve a design/strategy/positioning question or change a PROMOTED decision on the user's behalf — those are exactly what Phase 4 surfaces for them.
 - Promotion only happens AFTER the human gate. A clean checker run is NOT permission to promote unresolved conflicts.
