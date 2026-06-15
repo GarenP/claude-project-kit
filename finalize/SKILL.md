@@ -35,6 +35,7 @@ Announce to the user at the start: *"Finalize is heavy. I'll checkpoint + commit
 ### Phase 2 — Retrospective
 - If the session captured a *lived conversation worth mining* (a grill, a mock, a rich brainstorm), run the `retrospective` skill on the capture → write its output under `audit/`.
 - (If the session was pure mechanical work with no method to extract, note "retrospective n/a" and skip.)
+- **Mistake post-mortem:** surface any MEANINGFUL mistakes made this session (ones that affected a decision/output/understanding — not trivial mechanics) → for each, name the root cause + propose a SYSTEMIC prevention (a rule/checker/guardrail/kit change). These feed the Phase 4 human gate, which decides which become permanent. (Mistake → root-cause → never-repeat; D-119.)
 - Commit: `finalize: phase 2 — retrospective`.
 
 ### Phase 3 — Battery (+ optional isolated-battery)
