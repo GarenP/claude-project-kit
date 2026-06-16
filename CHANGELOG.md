@@ -4,6 +4,11 @@ All notable changes to the five skills (project-init · Grill Me · flow-map · 
 
 The kit is dogfooded on a live product build — most improvements are battle-tested fixes from real sessions, noted as such.
 
+## 2026-06-16
+
+### Changed
+- **Ledger-reading checkers must parse decision IDs format-TOLERANTLY (real-session fix).** On a live build the decision ledger had accreted two row formats — the canonical `| D-0XX | … |` table row and a legacy `> **D-0XX** · … Status: X.` blockquote row — but the doc↔ledger sync checker parsed only the table format, so valid provenance citations to blockquote-era decisions silently FAILED (read as "broken citation" when the decision was real). Fix: (1) the `project-init` checker-generation step now requires any ledger-reading checker to tolerate BOTH formats; (2) the scaffolded `CLAUDE.md` ledger rule now states the canonical row format, requires a `### D-0XX` detail block **on promotion** (what `check_promotions` enforces), and forbids authoring new blockquote rows. New LESSONS principle: *ledger checkers must parse format-tolerantly, or drift silently breaks citation-checks.*
+
 ## 2026-06-14
 
 ### Added

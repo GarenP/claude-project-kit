@@ -2,6 +2,11 @@
 
 Every entry is a real-world miss that taught the kit something. The intelligence is in the **clusters**: when several misses share a root cause, we abstract a **principle** that kills the whole family — not just the instance. Each fix is judged against the kit's full Commander's Intent (a **complete**, clean, **buildable** spec — fast, low-friction, the user **educated** along the way, and **as few bugs as possible at build** — see project-init for the full statement; never the speed-only short form). Newest clusters on top.
 
+## Principle: ledger checkers must parse decision IDs format-TOLERANTLY, or drift silently breaks citation-checks
+*(cluster: silent-checker-miss · format-drift)*
+- **Miss:** a live project's ledger accreted two row formats over time — the canonical `| D-0XX | … |` table row and a legacy `> **D-0XX** · … Status: X.` blockquote row — but the doc↔ledger sync checker parsed only the table format. Valid provenance citations to the blockquote-era decisions silently FAILED the checker, reading as "broken citation" when the decision was real and present. **Fix:** the checker now reads BOTH formats; the scaffolded `CLAUDE.md` documents the canonical row format, requires a `### D-0XX` detail block ON PROMOTION (what `check_promotions` enforces), and forbids authoring new blockquote rows.
+- **The family this kills:** any checker that parses an accreting, human-edited ledger/doc with ONE rigid pattern. New rule of thumb: a checker that reads structured human text must tolerate every format that text has historically used — a single rigid pattern produces FALSE failures, and false failures erode trust in the whole verification battery.
+
 > How this works: a miss surfaces in real use → it's logged here → a fix is proposed → on the owner's confirm, the fix goes into the skill + a "born from real X" CHANGELOG note. Propose-and-confirm, never silent self-rewrite.
 
 ---
