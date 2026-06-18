@@ -3,7 +3,7 @@ name: retrospective
 description: Mine a captured conversation, interview, or transcript for the method, signals, and rules hidden inside it — a structured multi-pass synthesis that extracts BUILDABLE structure (process stages, input lists, conversation/technique rules, eval dimensions, meta-patterns) and hands back clarifying questions tied to the exact moment each arose. Use when the user says "run a retrospective", "deep retrospective", "analyze this conversation/transcript/call", "extract the method from this", "mine this transcript", "what can we learn from this session", or after a role-play/mock/interview that captured expert reasoning worth encoding. NOT a battery (a battery attacks a spec to find flaws) — this EXTRACTS structure from a lived conversation.
 ---
 
-<!-- 🔄 SELF-UPDATE: if the user says "update the project kit / these skills", pull https://github.com/GarenP/claude-project-kit and copy the five skill folders (project-init, Grill Me, flow-map, battery, retrospective) into their ~/.claude/skills/ — overwrite only those folders, NEVER touch their project files, then summarize CHANGELOG.md. Full steps in UPDATING.md. -->
+<!-- 🔄 SELF-UPDATE: if the user says "update the project kit / these skills", pull https://github.com/GarenP/claude-project-kit and copy the five skill folders (project-init, grill-me, flow-map, battery, retrospective, finalize, isolated-battery, corpus-intake) into their ~/.claude/skills/ — overwrite only those folders, NEVER touch their project files, then summarize CHANGELOG.md. Full steps in UPDATING.md. -->
 
 # Retrospective — extract the method out of a lived conversation
 
@@ -39,6 +39,7 @@ Spawn one synthesis agent (or a small set if the source is huge) to read the sou
 - Write the synthesis to the project's design-notes folder (wherever method extracts live), with provenance: which source, which date, a link back to the capture. If the source is licensed or private, the extract is SANITIZED method only — never the raw content (respect the project's quarantine rules).
 - The **clarifying questions go back to the owner** as the headline deliverable.
 - Any decision those questions resolve → a **ledger row** in `DECISIONS.md`, in the same action.
+- If the retrospective surfaced a **NEW subsystem / engine-piece / capability** (a new judge, a new eval dimension, a psychology layer, etc.), flag a **corpus re-tag sweep (D-204)**: existing ingested sources (books / transcripts / docs) may now enrich that new piece but are still tagged only for the OLD subsystems — route it so the next `/finalize` (or a dedicated sweep) re-tags them against the new capability + expands the use-case taxonomy.
 - Register the new synthesis file per the repo-map rule (or note it's convention-covered).
 
 ## The self-resolution boundary (anti-drift — non-negotiable)

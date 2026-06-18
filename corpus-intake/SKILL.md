@@ -3,7 +3,7 @@ name: corpus-intake
 description: Ingest source material (books, PDFs, transcripts, research docs, articles) into a project's quarantined corpus — archive the raw, convert to clean markdown, image-capture + cite any figures/visual imagery, and register it — so it's ready as falsework for own-words extraction. Use when the user says "ingest these books / this research", "parse this into the corpus", "add to the never-ship", "build the dataset from these", or before firing rubric/knowledge-building agents that need a rich source set. Handles the "copy in, never wire to the source" standalone rule + the falsework / own-words gate automatically.
 ---
 
-<!-- 🔄 SELF-UPDATE: if the user says "update the project kit / these skills", pull https://github.com/GarenP/claude-project-kit and copy the skill folders (project-init, Grill Me, flow-map, battery, retrospective, finalize, isolated-battery, corpus-intake) into their ~/.claude/skills/ — overwrite only those folders, NEVER touch their project files, then summarize CHANGELOG.md. Full steps in UPDATING.md. -->
+<!-- 🔄 SELF-UPDATE: if the user says "update the project kit / these skills", pull https://github.com/GarenP/claude-project-kit and copy the skill folders (project-init, grill-me, flow-map, battery, retrospective, finalize, isolated-battery, corpus-intake) into their ~/.claude/skills/ — overwrite only those folders, NEVER touch their project files, then summarize CHANGELOG.md. Full steps in UPDATING.md. -->
 
 # Corpus Intake — turn raw source material into clean, cited, quarantined falsework
 

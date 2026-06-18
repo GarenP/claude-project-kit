@@ -3,7 +3,7 @@ name: project-init
 description: Spin up a new project folder/repo with the full decision-discipline kit — philosophy interview first, then scaffold CLAUDE.md, decision ledger, repo map, brainstorm system, quarantine, checker scripts, and process rules. Use when starting a new project, initializing a repo for a design/build effort, or when the user says "project init" / "set up a new project workspace" / "start a project the disciplined way".
 ---
 
-<!-- 🔄 SELF-UPDATE: if the user says "update the project kit / project-init / these skills", pull https://github.com/GarenP/claude-project-kit and copy the five skill folders (project-init, Grill Me, flow-map, battery, retrospective) into their ~/.claude/skills/ — overwrite only those folders, NEVER touch their project files, then summarize CHANGELOG.md. Full steps in UPDATING.md. -->
+<!-- 🔄 SELF-UPDATE: if the user says "update the project kit / project-init / these skills", pull https://github.com/GarenP/claude-project-kit and copy the five skill folders (project-init, grill-me, flow-map, battery, retrospective, finalize, isolated-battery, corpus-intake) into their ~/.claude/skills/ — overwrite only those folders, NEVER touch their project files, then summarize CHANGELOG.md. Full steps in UPDATING.md. -->
 
 # Project Init — the decision-discipline starter kit
 

@@ -1,8 +1,18 @@
 # Changelog — Claude Project Kit
 
-All notable changes to the five skills (project-init · Grill Me · flow-map · battery · retrospective). Newest first. Dates are when the change shipped to this repo.
+All notable changes to the eight skills (project-init · grill-me · flow-map · battery · retrospective · finalize · isolated-battery · corpus-intake). Newest first. Dates are when the change shipped to this repo.
 
 The kit is dogfooded on a live product build — most improvements are battle-tested fixes from real sessions, noted as such.
+
+## 2026-06-18
+
+### Fixed
+- **`Grill Me` folder renamed to `grill-me` — fixes "unknown command" on invoke.** Real bug from a live session: the skill folder had a SPACE in its name (`Grill Me`), and the harness builds the slash-command from the folder name — so `/grill-me` auto-filled as `/Grill Me`, which the parser split at the space (command `Grill` + arg `Me`) → "unknown command." It was the only kit skill folder with a space. Renamed the folder (and repointed the install symlink) to `grill-me` to match every other skill; the in-file `name:` was already `grill-me`.
+- **Self-update folder lists made consistent across all skills.** The `🔄 SELF-UPDATE` note in each SKILL.md (and `UPDATING.md`) listed DIFFERENT folder sets — some said "five skills" (the original set), the newer ones said seven, only `corpus-intake` listed all eight. So "update the project kit" copied a different set depending on which skill triggered it, silently skipping `finalize` / `isolated-battery` / `corpus-intake`. All notes now list the true canonical eight with the corrected `grill-me` name.
+- **`finalize` skill merged (two diverged copies reunited).** The kit copy and the installed copy had drifted apart — each held improvements the other lacked (kit: the mistake post-mortem step + the Phase-6 reductive-refocus close; installed: the never-show-bare-ledger-codes rule + the corpus re-tag sweep). Root cause = `finalize` was installed as a real-dir COPY, not a symlink, so it drifted. Merged into the union (all four) on both sides.
+
+### Known issue (follow-up)
+- **`finalize` / `isolated-battery` / `corpus-intake` are installed as COPIES, not symlinks** (the original five — `project-init`, `grill-me`, `flow-map`, `battery`, `retrospective` — are symlinks into this repo and never drift). The 3 copies have been refreshed to the current repo content, but they can drift again on the next kit edit. Converting them to symlinks requires a Windows shell with **admin / Developer Mode** (`New-Item -ItemType SymbolicLink`); do this once and the no-copy-drift guarantee holds for all eight. Until then, re-copy these three after any kit change.
 
 ## 2026-06-16
 

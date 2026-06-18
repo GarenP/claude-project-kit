@@ -3,7 +3,7 @@ name: finalize
 description: Run the end-of-session FINALIZE wrap — the deliberate, resumable procedure that closes out a brainstorm/work session: verification checkers → retrospective → battery (+ optional isolated-battery) → a human-in-the-loop gate for any conflicts → then promote settled decisions into ALL canonical docs (the whole docs/ folder) + the PRD + the system-flow-map, and commit/push. Use when the user says "finalize", "wrap up the session", "push the updates", "promote everything", "close out", or at a session-end / promotion-sweep gate. Heavy + token-intensive by design, so it CHECKPOINTS and COMMITS after every phase and is fully resumable after a crash, shutdown, or rate-limit. Replaces the old session-end procedure that lived inline in CLAUDE.md.
 ---
 
-<!-- 🔄 SELF-UPDATE: if the user says "update the project kit / these skills", pull https://github.com/GarenP/claude-project-kit and copy the skill folders (project-init, Grill Me, flow-map, battery, retrospective, finalize, isolated-battery) into their ~/.claude/skills/ — overwrite only those folders, NEVER touch their project files, then summarize CHANGELOG.md. Full steps in UPDATING.md. -->
+<!-- 🔄 SELF-UPDATE: if the user says "update the project kit / these skills", pull https://github.com/GarenP/claude-project-kit and copy the skill folders (project-init, grill-me, flow-map, battery, retrospective, finalize, isolated-battery, corpus-intake) into their ~/.claude/skills/ — overwrite only those folders, NEVER touch their project files, then summarize CHANGELOG.md. Full steps in UPDATING.md. -->
 
 # Finalize — the resumable session-end wrap + promotion sweep
 
@@ -47,6 +47,7 @@ Announce to the user at the start: *"Finalize is heavy. I'll checkpoint + commit
 ### Phase 4 — 🧑 Human-in-the-loop gate (STOP before promoting)
 - **Do not push to the PRD/docs yet.** Gather everything from Phases 1–3 that needs a human decision: checker failures, battery findings, contradictions between a new decision and a PROMOTED one, ambiguous numbers, anything the self-resolution boundary forbids resolving alone.
 - Present them to the user as a short, plain-language decision list and **WAIT for their calls.** If there are zero conflicts, say so and proceed.
+- ★ **Never present bare ledger codes (D-0XX).** The user does NOT track codes by number and is out-of-context on a long index — a list of "promote D-208, D-210, D-195" is meaningless to them. Each promotion candidate / conflict = **its ESSENCE in one plain sentence** (what the decision actually says), grouped by theme, code in a trailing parenthesis at most. (Recurring real-user complaint — the index line items alone carry no context.) Same rule applies to the Phase-5 recap.
 - Record the user's resolutions into the ledger (new/adjusted rows) before promoting.
 - Commit: `finalize: phase 4 — conflicts resolved` (only after the human responds).
 
@@ -55,6 +56,7 @@ Announce to the user at the start: *"Finalize is heavy. I'll checkpoint + commit
   - **The whole `docs/` folder** — `icp.md`, `offer.md`, `mechanism-and-value.md`, **`facts-registry.md`** (any changed numbers), and **`validation-summary.md`** (re-distill so the human check-page is current). Update each doc's provenance header (`Built from` + `Last reconciled` date) and stamp the ledger row `→ PROMOTED → docs/X.md (date)`.
   - **The PRD** — promote spec-level decisions into the right section; bump the version + changelog note.
   - **The system-flow-map** (`schema/system-flow-map.*`) — regenerate via `/flow-map` if the change touched the architecture.
+  - **Corpus re-tag sweep (D-204)** — if this session ADDED a new subsystem / engine-piece (a new judge, a psychology layer, a knowledge graph, a new card mechanic, etc.), sweep the corpus registries (`_NEVER-SHIP/**/_CORPUS-REGISTRY.md`) and **re-tag existing sources** (books / transcripts / docs that could now enrich the new piece) + expand the use-case tag taxonomy to include it. Stops the "source tagged only for the OLD subsystems" drift as the system grows — sources don't auto-surface for capabilities that didn't exist when they were ingested.
 - Re-run `check_doc_sync.py` + `check_promotions.py` — they must pass (no doc citing a superseded decision, no number drift). Fix anything they flag.
 - Final commit: `finalize: phase 5 — promoted + pushed`, then **`git push`** (and push the gitignored vault repo too if `_NEVER-SHIP/raw/` changed).
 - Clear/mark the progress file fully `[x]` done.
