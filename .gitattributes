@@ -1,0 +1,7 @@
+# Normalize line endings to LF in the repo so skill files never show phantom
+# CRLF-vs-LF "divergence" against any working copy. Skills are read by the agent,
+# not Windows tools, so LF everywhere is safe and consistent.
+* text=auto eol=lf
+*.md text eol=lf
+*.py text eol=lf
+*.ps1 text eol=lf
