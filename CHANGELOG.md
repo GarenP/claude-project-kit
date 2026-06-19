@@ -4,6 +4,15 @@ All notable changes to the eight skills (project-init · grill-me · flow-map ·
 
 The kit is dogfooded on a live product build — most improvements are battle-tested fixes from real sessions, noted as such.
 
+## 2026-06-19
+
+### Added
+- **project-init now scaffolds the deterministic DECISION-GRAPH layer + the grep-default / graph-on-demand retrieval routing rule** (new scaffold step #6c + a new `CLAUDE.md` process rule). The standard relational lens over the ledger = a stdlib parser (ledger → typed nodes/edges, one-way, markdown stays canonical) + an LLM-free viz; semantic contradiction = **Claude Code reads the related decisions on demand** (HITL — graph proposes, owner disposes). Explicitly **NO cognee / vector DB / hosted graphRAG until grep actually stops scaling (YAGNI).** Born from a live build (D-487) that sank real effort into a brittle cognee graph whose decision-domain use case needed none of it — the simplest solution was "just use Claude Code."
+- **`plans/` added as a `check_orphans` convention folder** — the standard output dir of the `improve` advisor skill.
+
+### Fixed
+- **Copy-drift RESOLVED — the 3 drift-prone skills (`finalize` / `isolated-battery` / `corpus-intake`) + `grill-me` converted to JUNCTIONS into this repo.** They were real-dir COPIES that drifted (the prior known-issue); now ALL 8 process skills are junctions to this repo = single source of truth, no drift possible. Verified the divergence was line-endings only (content identical). Added **`.gitattributes` (LF normalization)** so a working copy can never again show a phantom CRLF-vs-LF "divergence" flag.
+
 ## 2026-06-18
 
 ### Fixed
